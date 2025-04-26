@@ -37,6 +37,38 @@ android {
 
 dependencies {
 
+
+
+    //navigation
+    implementation (libs.androidx.navigation.fragment.ktx)
+    implementation (libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.common)
+
+    //cardView
+    implementation(libs.androidx.cardview)
+    //RecyclerView
+    implementation(libs.androidx.recyclerview)
+
+    //corrutinas
+    implementation(libs.kotlinx.coroutines.android)
+
+    //viewmodel
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.activity.ktx)
+    implementation (libs.androidx.fragment.ktx)
+
+    // LiveData
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+
+
+    //retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
+    //Glide
+    implementation (libs.glide)
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -45,4 +77,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
+
+
+
+
 }
