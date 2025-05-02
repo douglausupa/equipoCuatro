@@ -2,7 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <!-- Colores personalizados -->
+
+    <!-- Colores de jba -->
     <color name="gris_oscuro">#333333</color>
-    <color name="blanco">#FFFFFF</color>
+    <color name="blanco">#FFFFFFFF</color>
+
+    <!-- Colores de main -->
+    <color name="darkGray">#FF2D2D2D</color>
+    <color name="purple">#9C27B0</color>
+    <color name="buttonBackgroundColor">#F05861</color>
 </resources>
+
+
+
