@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">AplicacionCitas</string>
+    <string name="appName">AplicacionCitas</string>
+    <string name="nuevaCita">Nueva Cita</string>
+    <string name="nombreMascota">Nombre de la mascota</string>
+    <string name="raza">Raza</string>
+    <string name="nombrePropietario">Nombre del propietario</string>
+    <string name="telefono">Teléfono</string>
+    <string name="sintomas">Síntomas</string>
+    <string name="guardarCita">Guardar Cita</string>
+
+    <!-- Lista de síntomas -->
+    <string-array name="listaSintomas">
+        <item>Solo duerme</item>
+        <item>No come</item>
+        <item>Fractura extremidad</item>
+        <item>Tiene pulgas</item>
+        <item>Tiene garrapatas</item>
+        <item>Bota demasiado pelo</item>
+    </string-array>
 </resources>
