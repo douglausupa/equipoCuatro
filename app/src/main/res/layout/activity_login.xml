@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gris_oscuro">
+
+    <!-- Imagen del perro (cabeza) -->
+
+
+    <ImageView
+        android:id="@+id/imgDog"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="-10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/perro_cabeza"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Título de la app -->
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="232dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="236dp"
+        android:fontFamily="@font/lilite_one"
+        android:letterSpacing="0.05"
+        android:text="DogApp"
+        android:textColor="@color/blanco"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgDog" />
+
+    <!-- Animación de huella -->
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animFingerprint"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="104dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/fingerprint_anim" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
