@@ -37,7 +37,8 @@ android {
 
 dependencies {
 
-
+    //Animacion Huella
+    implementation("com.airbnb.android:lottie:6.1.0")
 
     //navigation
     implementation (libs.androidx.navigation.fragment.ktx)
