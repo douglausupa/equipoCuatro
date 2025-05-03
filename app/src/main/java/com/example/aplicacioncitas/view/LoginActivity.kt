@@ -1,14 +1,15 @@
 package com.example.aplicacioncitas.view
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.aplicacioncitas.R
-import com.airbnb.lottie.LottieAnimationView
 import android.widget.Toast
-import androidx.biometric.BiometricManager
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
+import com.airbnb.lottie.LottieAnimationView
+import com.example.aplicacioncitas.R
+import com.example.aplicacioncitas.view.ui.home.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -44,7 +45,11 @@ class LoginActivity : AppCompatActivity() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     Toast.makeText(applicationContext, "Acceso concedido", Toast.LENGTH_SHORT).show()
-                    // TODO: Navegar a HU 2.0 (Home)
+
+                    // Navegar a HomeActivity
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
 
                 override fun onAuthenticationFailed() {

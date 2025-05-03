@@ -82,9 +82,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-
-
-
-
+    // Foto en circulo
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
 }
