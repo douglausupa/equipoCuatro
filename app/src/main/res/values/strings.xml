@@ -2,11 +2,12 @@
     <string name="appName">AplicacionCitas</string>
     <string name="nuevaCita">Nueva Cita</string>
     <string name="nombreMascota">Nombre de la mascota</string>
-    <string name="raza">Raza</string>
+    <string name="raza">  Raza</string>
     <string name="nombrePropietario">Nombre del propietario</string>
     <string name="telefono">Teléfono</string>
     <string name="sintomas">Síntomas</string>
     <string name="guardarCita">Guardar Cita</string>
+    <string name="editarcita">Editar Cita</string>
 
     <!-- Lista de síntomas -->
     <string-array name="listaSintomas">
