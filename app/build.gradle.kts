@@ -33,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -47,6 +50,8 @@ dependencies {
     implementation (libs.androidx.navigation.fragment.ktx)
     implementation (libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.common)
+
+
 
     //cardView
     implementation(libs.androidx.cardview)
@@ -81,8 +86,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // Foto en circulo
-    implementation("de.hdodenhof:circleimageview:3.1.0")
 
 }

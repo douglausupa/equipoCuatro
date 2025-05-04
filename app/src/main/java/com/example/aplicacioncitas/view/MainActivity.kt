@@ -1,5 +1,6 @@
 package com.example.aplicacioncitas.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -42,6 +43,9 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val intent = Intent(this, EditarCita::class.java)
+        startActivity(intent)
     }
 
     private fun validarCamposObligatorios() {
