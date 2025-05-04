@@ -1,5 +1,5 @@
 <resources>
-    <string name="appName">AplicacionCitas</string>
+    <string name="appName">DogApp</string>
     <string name="nuevaCita">Nueva Cita</string>
     <string name="nombreMascota">Nombre de la mascota</string>
     <string name="raza">  Raza</string>
