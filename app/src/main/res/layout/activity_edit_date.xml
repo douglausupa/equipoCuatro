@@ -23,6 +23,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/volver"
             android:src="@drawable/arrowback"
             android:background="@android:color/transparent"
             android:padding="16dp"
@@ -61,8 +62,9 @@
             android:id="@+id/etNombreMascota"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
             app:layout_constraintVertical_bias="0.22"
-            android:textSize="16sp"/>
+            tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -79,14 +81,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.33">
 
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        <AutoCompleteTextView
             android:id="@+id/autoCompleteRaza"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             app:layout_constraintVertical_bias="0.33"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:padding="16dp"/>
     </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <!-- Campo: Dueño -->

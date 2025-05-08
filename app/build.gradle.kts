@@ -51,7 +51,7 @@ dependencies {
     implementation (libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.common)
 
-
+    implementation(libs.circleimageview)
 
     //cardView
     implementation(libs.androidx.cardview)

@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val intent = Intent(this, EditarCita::class.java)
-        startActivity(intent)
     }
 
     private fun validarCamposObligatorios() {
