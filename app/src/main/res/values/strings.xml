@@ -8,6 +8,8 @@
     <string name="sintomas">Síntomas</string>
     <string name="guardarCita">Guardar Cita</string>
     <string name="editarcita">Editar Cita</string>
+    <string name="eliminarcita">Eliminar Cita</string>
+    <string name="devolver">Devolver</string>
 
     <!-- Lista de síntomas -->
     <string-array name="listaSintomas">
@@ -20,4 +22,5 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

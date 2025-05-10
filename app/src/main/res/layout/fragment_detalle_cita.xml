@@ -39,39 +39,47 @@
         android:src="@drawable/arrowback"
         android:background="@android:color/transparent"
         android:padding="16dp"
+        android:contentDescription="@string/devolver"
         app:tint="@color/buttonBackgroundColor"
         app:layout_constraintStart_toStartOf="@id/toolbar"
         app:layout_constraintTop_toTopOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="@id/toolbar"/>
 
-    <!-- CardView - Detalles de la Cita -->
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardMascota"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:layout_editor_absoluteX="111dp">
-
-    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardDetallesCita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
-        android:layout_margin="16dp"
+        android:layout_marginTop="110dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
+        app:cardElevation="6dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintTop_toBottomOf="@id/cardMascota">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- El TextView posicionado en la esquina superior derecha -->
+            <TextView
+                android:id="@+id/tvTurno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                android:text="#1"
+                android:textColor="@color/red"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,31 +88,26 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/tvTurno"
+                android:id="@+id/tvRaza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="#1"
-                android:textColor="@color/red"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvSintomas" />
-
-            <TextView
-                android:id="@+id/tvRaza"
-                android:text="@string/raza"
+                android:paddingTop="90dp"
+                android:text="Raza:"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:layout_gravity="center_horizontal"
+                android:textSize="20sp"
+                android:layout_marginTop="8dp" />
 
             <TextView
                 android:id="@+id/tvSintomas"
-                android:text="@string/sintomas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Síntomas:"
                 android:textColor="@android:color/black"
-                app:layout_constraintTop_toBottomOf="@id/tvRaza"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:layout_gravity="center_horizontal"
+                android:textSize="15sp"
+                android:layout_marginTop="4dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -113,15 +116,20 @@
 
             <TextView
                 android:id="@+id/tvPropietario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Propietario:"
-                android:textStyle="bold"
                 android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tvTelefono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Teléfono:"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -136,6 +144,7 @@
         android:background="@drawable/boton_negro_redondeado"
         android:elevation="6dp"
         android:layout_margin="16dp"
+        android:contentDescription="@string/editarcita"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -149,16 +158,21 @@
         android:background="@drawable/boton_rojo_redondeado"
         android:layout_margin="16dp"
         android:elevation="6dp"
+        android:contentDescription="@string/eliminarcita"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <ImageView
-        android:id="@+id/imgMascota"
+    <!-- CardView - Imagen Mascota-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardMascota"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_margin="8dp"
-        android:scaleType="centerCrop"
-        tools:layout_editor_absoluteX="111dp"
-        tools:layout_editor_absoluteY="108dp" />
+        android:layout_marginTop="30dp"
+         app:cardCornerRadius="16dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
