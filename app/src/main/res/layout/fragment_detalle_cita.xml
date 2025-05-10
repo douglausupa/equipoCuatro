@@ -44,24 +44,21 @@
         app:layout_constraintTop_toTopOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="@id/toolbar"/>
 
+    <!-- CardView - Detalles de la Cita -->
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardMascota"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="6dp"
-        android:layout_marginTop="8dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:layout_editor_absoluteX="111dp">
 
-        <ImageView
-            android:id="@+id/imgMascota"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
     </androidx.cardview.widget.CardView>
 
-    <!-- CardView - Detalles de la Cita -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardDetallesCita"
         android:layout_width="match_parent"
@@ -69,6 +66,10 @@
         app:cardCornerRadius="16dp"
         app:cardElevation="6dp"
         android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintTop_toBottomOf="@id/cardMascota">
 
@@ -77,6 +78,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvTurno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="#1"
+                android:textColor="@color/red"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSintomas" />
 
             <TextView
                 android:id="@+id/tvRaza"
@@ -92,18 +105,6 @@
                 android:textColor="@android:color/black"
                 app:layout_constraintTop_toBottomOf="@id/tvRaza"
                 app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:id="@+id/tvTurno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#1"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/red"
-                android:gravity="end"
-            app:layout_constraintTop_toBottomOf="@id/tvSintomas"
-            app:layout_constraintEnd_toEndOf="parent" />
 
             <View
                 android:layout_width="match_parent"
@@ -125,30 +126,39 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!-- Botón flotante editar -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabEditar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!-- Botón flotante Editar -->
+    <ImageButton
+        android:id="@+id/btnEditar"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:backgroundTint="@color/black"
         android:src="@drawable/ic_pencil"
-        app:backgroundTint="@color/black"
-        app:iconTint="@color/white"
+        android:background="@drawable/boton_negro_redondeado"
+        android:elevation="6dp"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Botón flotante eliminar -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+       <ImageButton
         android:id="@+id/fabEliminar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         app:backgroundTint="@color/red"
-        app:iconTint="@color/white"
+        android:src="@drawable/ic_delete"
+        android:background="@drawable/boton_rojo_redondeado"
         android:layout_margin="16dp"
+        android:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-
+    <ImageView
+        android:id="@+id/imgMascota"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="108dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
