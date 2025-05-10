@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -26,6 +28,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -36,15 +39,34 @@ android {
     viewBinding {
         enable = true
     }
+
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/INDEX.LIST",
+                "META-INF/io.netty.versions.properties",
+                "META-INF/DEPENDENCIES",
+                "META-INF/*.md" // Opcional: excluye archivos markdown
+            )
+        }
+    }
 }
+
+
 
 dependencies {
     //APIS HUELLA DACTILAR
     implementation("androidx.biometric:biometric:1.2.0-alpha04")
     implementation("com.google.android.material:material:1.9.0")
-
-    //Animacion Huella
     implementation("com.airbnb.android:lottie:6.1.0")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     //navigation
     implementation (libs.androidx.navigation.fragment.ktx)
@@ -83,6 +105,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.appdistribution.gradle)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
