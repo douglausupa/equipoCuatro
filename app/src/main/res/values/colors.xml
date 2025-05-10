@@ -14,8 +14,8 @@
 
     <!-- Colores SAM para detalle cota-->
     <!-- linea separadora -->
-    <color name="rosado">#FF69B4</color>
-    <color name="rojo">#D32F2F</color>
+    <color name="pink">#FF69B4</color>
+    <color name="red">#D32F2F</color>
 
 
 </resources>

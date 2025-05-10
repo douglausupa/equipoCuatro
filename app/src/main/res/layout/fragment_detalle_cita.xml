@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="detallecita.DetalleCitaFragment">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="370dp"
@@ -51,7 +52,7 @@
         app:cardElevation="6dp"
         android:layout_marginTop="8dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">  <!-- 🔹 Corrección aquí -->
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <ImageView
             android:id="@+id/imgMascota"
@@ -81,17 +82,33 @@
                 android:id="@+id/tvRaza"
                 android:text="@string/raza"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/tvSintomas"
                 android:text="@string/sintomas"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@id/tvRaza"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvTurno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#1"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/red"
+                android:gravity="end"
+            app:layout_constraintTop_toBottomOf="@id/tvSintomas"
+            app:layout_constraintEnd_toEndOf="parent" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/rosado"/>
+                android:background="@color/pink"/>
 
             <TextView
                 android:id="@+id/tvPropietario"
@@ -105,7 +122,20 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+
+    <!-- Botón flotante editar -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pencil"
+        app:backgroundTint="@color/black"
+        app:iconTint="@color/white"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Botón flotante eliminar -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -113,19 +143,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_delete"
-        app:backgroundTint="@color/rojo"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Botón flotante editar -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabEditar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_edit"
-        app:backgroundTint="@color/black"
+        app:backgroundTint="@color/red"
+        app:iconTint="@color/white"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
