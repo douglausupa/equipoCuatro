@@ -11,8 +11,6 @@
     <string name="volver">Volver</string>
     <string name="eliminarcita">Eliminar Cita</string>
 
-
-
     <!-- Lista de síntomas -->
     <string-array name="listaSintomas">
         <item>Solo duerme</item>

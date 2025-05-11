@@ -157,7 +157,4 @@
             app:iconTint="@color/black"
             />
 
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

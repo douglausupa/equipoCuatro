@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
-
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
         android:allowBackup="true"
@@ -19,13 +18,15 @@
 
         <activity
             android:name=".view.LoginActivity"
-            android:exported="true"
-            tools:ignore="MissingClass">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".view.ui.home.HomeActivity" />
+        <activity android:name=".view.NuevaCita" />
 
     </application>
 
