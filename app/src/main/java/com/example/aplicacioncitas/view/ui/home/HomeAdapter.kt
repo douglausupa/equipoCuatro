@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.view.data.model.Cita
+import com.example.aplicacioncitas.model.Cita
 import de.hdodenhof.circleimageview.CircleImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 
 class HomeAdapter(
     private var citas: List<Cita>,
@@ -32,20 +33,35 @@ class HomeAdapter(
         private val tvTurno: TextView = itemView.findViewById(R.id.tvTurno)
 
         fun bind(cita: Cita) {
-            // Aquí llenamos los datos
+            // Llenando los campos con los datos de la cita
             tvNombreMascota.text = cita.nombreMascota
-            tvSintoma.text = cita.sintoma
-            tvTurno.text = "#${cita.turno}"
+            tvSintoma.text = cita.sintomas ?: "No especificado"
+            tvTurno.text = "#${cita.id}"
 
-            // Opcionalmente cargar imagen (después usando Glide o Picasso)
-            imgMascota.setImageResource(R.drawable.perro_cabeza)
+            // Lógica para elegir la imagen de la mascota según la raza
+            val raza = cita.raza.lowercase().trim()
+            val razaImagen = when {
+                "pastor" in raza -> R.drawable.pastor_aleman
+                "pitbull" in raza -> R.drawable.pitbull
+                "labrador" in raza -> R.drawable.labrador
+                "criollo" in raza -> R.drawable.perro_criollo
+                "doberman" in raza -> R.drawable.doberman
+                else -> R.drawable.ico_dog // Imagen por defecto si no se encuentra la raza
+            }
 
+            // Usamos Glide para cargar la imagen de la mascota
+            Glide.with(itemView.context)
+                .load(razaImagen)
+                .into(imgMascota)
+
+            // Configuramos el click listener en el itemView
             itemView.setOnClickListener {
                 onItemClick(cita)
             }
         }
     }
 
+    // Función para actualizar la lista de citas
     fun updateList(newList: List<Cita>) {
         citas = newList
         notifyDataSetChanged()
