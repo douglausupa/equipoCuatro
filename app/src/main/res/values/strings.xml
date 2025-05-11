@@ -7,7 +7,7 @@
     <string name="telefono">Teléfono</string>
     <string name="sintomas">Síntomas</string>
     <string name="guardarCita">Guardar Cita</string>
-    <string name="editarcita">Editar Cita</string>
+    <string name="editarCita">Editar Cita</string>
     <string name="volver">Volver</string>
 
     <!-- Lista de síntomas -->
