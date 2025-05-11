@@ -1,5 +1,6 @@
 package com.example.aplicacioncitas.view
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
@@ -7,6 +8,7 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.text.Editable
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,6 +19,7 @@ import com.example.aplicacioncitas.data.AppDatabase
 import com.example.aplicacioncitas.databinding.ActivityEditDateBinding
 import com.example.aplicacioncitas.model.Cita
 import com.example.aplicacioncitas.repository.CitaRepository
+import com.example.aplicacioncitas.view.ui.home.HomeActivity
 import com.example.aplicacioncitas.viewmodel.CitaViewModelFactory
 import com.example.aplicacioncitas.viewmodel.EditarCitaViewModel
 import com.example.aplicacioncitas.viewmodel.RazasViewModel
@@ -84,10 +87,19 @@ class EditarCita : AppCompatActivity() {
                     raza = binding.autoCompleteRaza.text.toString(),
                     telefono = binding.etTelefono.text.toString(),
                 )
+
                 citaViewModel.actualizarCita(citaActualizada)
+
+                Toast.makeText(this, "Cita actualizada correctamente", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
                 finish()
+            } else {
+                Toast.makeText(this, "No se pudo editar la cita", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     private fun validarlimitecaracteres() {
