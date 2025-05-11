@@ -1,5 +1,6 @@
 package com.example.aplicacioncitas.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -16,6 +17,7 @@ import com.example.aplicacioncitas.data.AppDatabase
 import com.example.aplicacioncitas.databinding.NuevaCitaBinding
 import com.example.aplicacioncitas.model.Cita
 import com.example.aplicacioncitas.repository.CitaRepository
+import com.example.aplicacioncitas.view.ui.home.HomeActivity
 import kotlinx.coroutines.launch
 
 class NuevaCita : AppCompatActivity() {
@@ -42,6 +44,16 @@ class NuevaCita : AppCompatActivity() {
         binding.btnGuardarCita.setOnClickListener {
             guardarCita()
         }
+
+        binding.btnBack.setOnClickListener {
+            navegarAHome()
+        }
+    }
+
+    private fun navegarAHome() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish() // Opcional: cierra esta actividad
     }
 
     private fun configurarDropdown() {
@@ -106,6 +118,11 @@ class NuevaCita : AppCompatActivity() {
                 runOnUiThread {
                     Toast.makeText(this@NuevaCita, "Cita guardada!", Toast.LENGTH_SHORT).show()
                     limpiarCampos()
+
+                    // Navegar a HomeActivity
+                    val intent = Intent(this@NuevaCita, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish() // Opcional: cierra esta actividad para no acumularla en la pila
                 }
             } catch (e: Exception) {
                 runOnUiThread {
