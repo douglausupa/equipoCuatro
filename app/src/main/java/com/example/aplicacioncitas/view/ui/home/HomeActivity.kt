@@ -8,7 +8,8 @@ import com.example.aplicacioncitas.R
 import com.example.aplicacioncitas.view.data.model.Cita
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.content.Intent
-import com.example.aplicacioncitas.view.ui.newappointment.NewAppointmentActivity
+import com.example.aplicacioncitas.view.NuevaCita
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -37,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupFab() {
         fabAddCita.setOnClickListener {
-            val intent = Intent(this, NewAppointmentActivity::class.java)
+            val intent = Intent(this, NuevaCita::class.java)
             startActivity(intent)
         }
     }

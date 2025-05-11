@@ -20,4 +20,8 @@ class CitaRepository(private val citaDao: CitaDao) {
     suspend fun obtenerPorId(id: Int): Cita? {
         return citaDao.obtenerCitaPorId(id)
     }
+
+    suspend fun obtenerTodasLasCitas(): List<Cita> {
+        return citaDao.obtenerTodasLasCitas()
+    }
 }
