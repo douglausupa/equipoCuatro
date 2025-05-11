@@ -1,45 +1,92 @@
 package com.example.aplicacioncitas.view
 
+import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.Editable
+import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.aplicacioncitas.R
+import com.example.aplicacioncitas.data.AppDatabase
 import com.example.aplicacioncitas.databinding.ActivityEditDateBinding
+import com.example.aplicacioncitas.model.Cita
+import com.example.aplicacioncitas.repository.CitaRepository
+import com.example.aplicacioncitas.viewmodel.CitaViewModelFactory
+import com.example.aplicacioncitas.viewmodel.EditarCitaViewModel
+import com.example.aplicacioncitas.viewmodel.RazasViewModel
 
 class EditarCita : AppCompatActivity() {
     private lateinit var binding: ActivityEditDateBinding
+    private lateinit var citaViewModel: EditarCitaViewModel
+    private lateinit var razasViewModel: RazasViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // 1. Inicializar binding PRIMERO
         binding = ActivityEditDateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         enableEdgeToEdge()
 
-        // 2. Configurar icono DESPUÉS de inicializar binding
-        val icon = ContextCompat.getDrawable(this, R.drawable.pencil)?.apply {
-            setBounds(0, 0, 64, 64)
+        // Inicializar la base de datos y ViewModel de la cita
+        val dao = AppDatabase.getDatabase(this).citaDao()
+        val repository = CitaRepository(dao)
+        val viewModelFactory = CitaViewModelFactory(repository)
+        citaViewModel = ViewModelProvider(this, viewModelFactory)[EditarCitaViewModel::class.java]
+        razasViewModel = ViewModelProvider(this)[RazasViewModel::class.java]
+
+        // Obtener la cita enviada desde la otra actividad
+        val cita = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("cita", Cita::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra("cita")
         }
 
+        // Mostrar los datos en la vista
+        cita?.let {
+            binding.etNombrePropietario.setText(it.nombrePropietario)
+            binding.autoCompleteRaza.setText(it.raza)
+            binding.etTelefono.setText(it.telefono)
+            binding.etNombreMascota.setText(it.nombreMascota)
+        }
 
-        // 3. Configuraciones iniciales
+        // Cargar razas desde la API
+        razasViewModel.fetchBreeds()
+        razasViewModel.breedList.observe(this) { razas ->
+            val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, razas)
+            binding.autoCompleteRaza.setAdapter(adapter)
+            binding.autoCompleteRaza.threshold = 2
+        }
+
+        // Configurar validaciones
         validarlimitecaracteres()
         setupTextWatchers()
-        validarbotoneditar() // Validación inicial
+        validarbotoneditar()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+
+        binding.btneditarcita.setOnClickListener {
+            if (cita != null) {
+                val citaActualizada = cita.copy(
+                    nombrePropietario = binding.etNombrePropietario.text.toString(),
+                    nombreMascota = binding.etNombreMascota.text.toString(),
+                    raza = binding.autoCompleteRaza.text.toString(),
+                    telefono = binding.etTelefono.text.toString(),
+                )
+                citaViewModel.actualizarCita(citaActualizada)
+                finish()
+            }
         }
     }
 
@@ -65,6 +112,7 @@ class EditarCita : AppCompatActivity() {
                 override fun afterTextChanged(s: Editable?) {
                     validarbotoneditar()
                 }
+
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
