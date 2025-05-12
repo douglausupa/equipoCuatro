@@ -18,12 +18,16 @@
     import com.example.aplicacioncitas.model.Cita
     import com.example.aplicacioncitas.repository.CitaRepository
     import com.example.aplicacioncitas.view.ui.home.HomeActivity
+    import androidx.lifecycle.ViewModelProvider
+    import com.example.aplicacioncitas.viewmodel.RazasViewModel
     import kotlinx.coroutines.launch
+    import com.example.aplicacioncitas.databinding.ActivityEditDateBinding
 
     class NuevaCita : AppCompatActivity() {
 
         private lateinit var binding: NuevaCitaBinding
         private lateinit var citaRepository: CitaRepository
+        private lateinit var razasViewModel: RazasViewModel
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -35,10 +39,16 @@
             val database = AppDatabase.getDatabase(applicationContext)
             citaRepository = CitaRepository(database.citaDao())
 
+            // Inicializar ViewModel de Razas
+            razasViewModel = ViewModelProvider(this)[RazasViewModel::class.java]
+
             // Configurar elementos UI
             configurarDropdown()
             configurarInsets()
             configurarValidacion()
+            // Cargar razas desde la API
+            cargarRazas()
+
 
             // Click del botón Guardar
             binding.btnGuardarCita.setOnClickListener {
@@ -47,6 +57,15 @@
 
             binding.btnBack.setOnClickListener {
                 navegarAHome()
+            }
+        }
+
+        private fun cargarRazas() {
+            razasViewModel.fetchBreeds()
+            razasViewModel.breedList.observe(this) { razas ->
+                val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, razas)
+                binding.autoCompleteRaza.setAdapter(adapter)
+                binding.autoCompleteRaza.threshold = 2 // Mostrar sugerencias tras 2 caracteres
             }
         }
 
@@ -79,7 +98,7 @@
         private fun configurarValidacion() {
             val campos = listOf(
                 binding.etNombreMascota,
-                binding.etRaza,
+                binding.autoCompleteRaza,
                 binding.etNombrePropietario,
                 binding.etTelefono,
                 binding.dropdownSintomas
@@ -102,7 +121,7 @@
             val cita = Cita(
                 nombrePropietario = binding.etNombrePropietario.text.toString().trim(),
                 nombreMascota = binding.etNombreMascota.text.toString().trim(),
-                raza = binding.etRaza.text.toString().trim(),
+                raza = binding.autoCompleteRaza.text.toString(),
                 telefono = binding.etTelefono.text.toString().trim(),
                 sintomas = binding.dropdownSintomas.text.toString().trim()
             )
@@ -135,14 +154,14 @@
         private fun limpiarCampos() {
             binding.etNombrePropietario.text?.clear()
             binding.etNombreMascota.text?.clear()
-            binding.etRaza.text?.clear()
+            binding.autoCompleteRaza.text?.clear()
             binding.etTelefono.text?.clear()
             binding.dropdownSintomas.text?.clear()
         }
 
         private fun validarCamposObligatorios() {
             val camposCompletos = binding.etNombreMascota.text?.isNotEmpty() == true &&
-                    binding.etRaza.text?.isNotEmpty() == true &&
+                    binding.autoCompleteRaza.text?.isNotEmpty() == true &&
                     binding.etNombrePropietario.text?.isNotEmpty() == true &&
                     binding.etTelefono.text?.isNotEmpty() == true &&
                     binding.dropdownSintomas.text?.isNotEmpty() == true
