@@ -72,6 +72,7 @@ class EditarCita : AppCompatActivity() {
         validarlimitecaracteres()
         setupTextWatchers()
         validarbotoneditar()
+        volver()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -141,5 +142,11 @@ class EditarCita : AppCompatActivity() {
         ).all { it }
 
         binding.btneditarcita.isEnabled = todosLlenos
+    }
+
+    private fun volver(){
+        binding.back.setOnClickListener {
+            finish()
+        }
     }
 }

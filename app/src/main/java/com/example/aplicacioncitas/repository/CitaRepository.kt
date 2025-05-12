@@ -24,4 +24,9 @@ class CitaRepository(private val citaDao: CitaDao) {
     suspend fun obtenerTodasLasCitas(): List<Cita> {
         return citaDao.obtenerTodasLasCitas()
     }
+
+    suspend fun eliminarCitaPorId(id: Int): Boolean {
+        val rowsDeleted = citaDao.eliminarCitaPorId(id)
+        return rowsDeleted > 0
+    }
 }
