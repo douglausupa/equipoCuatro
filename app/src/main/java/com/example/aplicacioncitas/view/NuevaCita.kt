@@ -72,7 +72,7 @@
         private fun navegarAHome() {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-            finish() // Opcional: cierra esta actividad
+            finish()
         }
 
         private fun configurarDropdown() {

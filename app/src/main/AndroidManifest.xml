@@ -27,6 +27,9 @@
 
         <activity android:name=".view.ui.home.HomeActivity" />
         <activity android:name=".view.NuevaCita" />
+        <activity android:name=".view.DetalleCitaActivity" />
+        <activity android:name=".view.EditarCita" />
+
 
     </application>
 

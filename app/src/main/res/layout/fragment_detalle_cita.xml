@@ -189,7 +189,7 @@
         app:backgroundTint="@color/red"
         android:layout_margin="16dp"
         android:elevation="6dp"
-        android:contentDescription="@string/eliminarCita"
+        android:contentDescription="@string/eliminarcita"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

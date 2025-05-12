@@ -17,4 +17,8 @@ interface CitaDao {
 
     @Query("SELECT * FROM citas")
     suspend fun obtenerTodasLasCitas(): List<Cita>
+
+    @Query("DELETE FROM citas WHERE id = :id")
+    suspend fun eliminarCitaPorId(id: Int): Int
+
 }
