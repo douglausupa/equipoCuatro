@@ -10,6 +10,10 @@
     <string name="editarcita">Editar Cita</string>
     <string name="volver">Volver</string>
     <string name="eliminarcita">Eliminar Cita</string>
+    <string name="propietario">Propietario</string>
+    <string name="tel_fono">Teléfono</string>
+    <string name="numeroCita">n</string>
+
 
     <!-- Lista de síntomas -->
     <string-array name="listaSintomas">
