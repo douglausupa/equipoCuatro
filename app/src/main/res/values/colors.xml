@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gris_claro">#B0B0B0</color>
 
     <!-- Colores de jba -->
     <color name="gris_oscuro">#333333</color>

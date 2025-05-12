@@ -34,4 +34,12 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
+
+    <style name="buttonStyleGuardar" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/buttonBackgroundColor</item>
+        <item name="shapeAppearance">@style/buttonStyleShape</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/edittext_color_states</item>
+        <!-- Puedes añadir más personalización aquí -->
+    </style>
 </resources>

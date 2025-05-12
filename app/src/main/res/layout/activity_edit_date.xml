@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.EditarCita">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.EditarCita">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="370dp"
-        android:layout_height="100dp"
-        android:background="@drawable/rounded_toolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        >
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="370dp"
+            android:layout_height="100dp"
+            android:background="@drawable/rounded_toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            >
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/volver"
-            android:src="@drawable/arrowback"
-            android:background="@android:color/transparent"
-            android:padding="16dp"
-            android:layout_gravity="center_vertical"
-            app:tint="@color/buttonBackgroundColor" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/volver"
+                android:src="@drawable/arrowback"
+                android:background="@android:color/transparent"
+                android:padding="16dp"
+                android:layout_gravity="center_vertical"
+                app:tint="@color/buttonBackgroundColor" />
 
-        <!-- TextView personalizado centrado -->
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/editarcita"
-            android:textAppearance="@style/toolbarTitle"
-            />
+            <!-- TextView personalizado centrado -->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/editarCita"
+                android:textAppearance="@style/toolbarTitle"
+                />
 
 
-    </androidx.appcompat.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
 
             <!-- Campos del formulario -->
@@ -142,7 +142,7 @@
         style="@style/buttonEditar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/editarcita"
+        android:text="@string/editarCita"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
