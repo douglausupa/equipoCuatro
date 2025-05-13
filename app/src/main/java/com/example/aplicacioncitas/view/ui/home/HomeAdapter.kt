@@ -3,12 +3,18 @@ package com.example.aplicacioncitas.view.ui.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.R
 import com.example.aplicacioncitas.model.Cita
+import com.example.aplicacioncitas.model.ImagenRazaResponse
+import com.example.aplicacioncitas.webservice.DogApiService
+import com.example.aplicacioncitas.webservice.RetrofitRazas
 import de.hdodenhof.circleimageview.CircleImageView
-import android.widget.TextView
-import com.bumptech.glide.Glide
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeAdapter(
     private var citas: List<Cita>,
@@ -33,35 +39,56 @@ class HomeAdapter(
         private val tvTurno: TextView = itemView.findViewById(R.id.tvTurno)
 
         fun bind(cita: Cita) {
-            // Llenando los campos con los datos de la cita
             tvNombreMascota.text = cita.nombreMascota
             tvSintoma.text = cita.sintomas ?: "No especificado"
             tvTurno.text = "#${cita.id}"
 
-            // Lógica para elegir la imagen de la mascota según la raza
-            val raza = cita.raza.lowercase().trim()
-            val razaImagen = when {
-                "pastor" in raza -> R.drawable.pastor_aleman
-                "pitbull" in raza -> R.drawable.pitbull
-                "labrador" in raza -> R.drawable.labrador
-                "criollo" in raza -> R.drawable.perro_criollo
-                "doberman" in raza -> R.drawable.doberman
-                else -> R.drawable.ico_dog // Imagen por defecto si no se encuentra la raza
-            }
+            val razaApi = mapearRazaParaApi(cita.raza)
 
-            // Usamos Glide para cargar la imagen de la mascota
-            Glide.with(itemView.context)
-                .load(razaImagen)
-                .into(imgMascota)
+            val apiService = RetrofitRazas.instance.create(DogApiService::class.java)
+            val call = apiService.obtenerImagenPorRaza(razaApi)
 
-            // Configuramos el click listener en el itemView
+            call.enqueue(object : Callback<ImagenRazaResponse> {
+                override fun onResponse(
+                    call: Call<ImagenRazaResponse>,
+                    response: Response<ImagenRazaResponse>
+                ) {
+                    if (response.isSuccessful && response.body()?.status == "success") {
+                        val url = response.body()?.message
+                        Glide.with(itemView.context)
+                            .load(url)
+                            .placeholder(R.drawable.ico_dog)
+                            .error(R.drawable.ico_dog)
+                            .into(imgMascota)
+                    } else {
+                        Glide.with(itemView.context).load(R.drawable.ico_dog).into(imgMascota)
+                    }
+                }
+
+                override fun onFailure(call: Call<ImagenRazaResponse>, t: Throwable) {
+                    Glide.with(itemView.context).load(R.drawable.ico_dog).into(imgMascota)
+                }
+            })
+
             itemView.setOnClickListener {
-                onItemClick(cita)
+                onItemClick(cita) // Delegamos la navegación al fragmento
+            }
+        }
+
+        private fun mapearRazaParaApi(raza: String): String {
+            return when (raza.lowercase().trim()) {
+                "pastor", "pastor alemán", "pastor aleman" -> "germanshepherd"
+                "pitbull" -> "pitbull"
+                "labrador" -> "labrador"
+                "doberman" -> "doberman"
+                "pug" -> "pug"
+                "husky" -> "husky"
+                "criollo", "mestizo", "sin raza" -> "mix"
+                else -> "dog"
             }
         }
     }
 
-    // Función para actualizar la lista de citas
     fun updateList(newList: List<Cita>) {
         citas = newList
         notifyDataSetChanged()
