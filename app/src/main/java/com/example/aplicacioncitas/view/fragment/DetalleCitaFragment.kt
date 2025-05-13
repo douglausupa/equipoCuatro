@@ -10,15 +10,23 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.example.aplicacioncitas.R
 import com.example.aplicacioncitas.data.AppDatabase
 import com.example.aplicacioncitas.databinding.FragmentDetalleCitaBinding
 import com.example.aplicacioncitas.model.Cita
+import com.example.aplicacioncitas.model.ImagenRazaResponse
 import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.view.DetalleCitaActivity
 import com.example.aplicacioncitas.view.EditarCita
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
 import com.example.aplicacioncitas.viewmodel.DetalleCitaViewModel
 import com.example.aplicacioncitas.viewmodel.DetalleCitaViewModelFactory
+import com.example.aplicacioncitas.webservice.DogApiService
+import com.example.aplicacioncitas.webservice.RetrofitRazas
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class DetalleCitaFragment : Fragment() {
@@ -35,6 +43,8 @@ class DetalleCitaFragment : Fragment() {
     private var telefono: String? = null
     private var sintomas: String? = null
     private var id: String? = null
+
+    private lateinit var dogApiService: DogApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +73,7 @@ class DetalleCitaFragment : Fragment() {
         val factory = DetalleCitaViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(DetalleCitaViewModel::class.java)
 
+        dogApiService = RetrofitRazas.instance.create(DogApiService::class.java)
         return binding.root
     }
 
@@ -82,6 +93,7 @@ class DetalleCitaFragment : Fragment() {
         eliminar()
         editarcita()
         debolver()
+        cargarImagenRaza()
 
         // Observa si la cita fue eliminada
         viewModel.citaEliminada.observe(viewLifecycleOwner, Observer { eliminado ->
@@ -129,6 +141,28 @@ class DetalleCitaFragment : Fragment() {
         }
     }
 
+    private fun cargarImagenRaza() {
+        val razaFormateada = raza?.replace(" ", "-")?.lowercase() ?: return
+
+        dogApiService.obtenerImagenPorRaza(razaFormateada).enqueue(object : Callback<ImagenRazaResponse> {
+            override fun onResponse(
+                call: Call<ImagenRazaResponse>,
+                response: Response<ImagenRazaResponse> // <- Response de Retrofit
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let { cuerpoRespuesta ->
+                        Glide.with(requireContext())
+                            .load(cuerpoRespuesta.message) // Usamos el campo del objeto
+                            .into(binding.ivMascota)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ImagenRazaResponse>, t: Throwable) {
+                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 
 
 
