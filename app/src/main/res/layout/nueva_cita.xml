@@ -67,7 +67,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etNombreMascota"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:maxLength="15"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Campo: Raza -->
@@ -92,12 +93,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:hint="@string/nombrePropietario">
+                android:hint="@string/nombrePropietario"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etNombrePropietario"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:maxLength="30"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Campo: telefono -->
@@ -111,7 +114,10 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etTelefono"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:maxLength="10"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
