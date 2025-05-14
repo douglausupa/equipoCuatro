@@ -31,6 +31,9 @@ class HomeAdapter(
     }
 
     override fun getItemCount(): Int = citas.size
+    fun updateList(citas: List<Cita>) {
+
+    }
 
     inner class CitaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgMascota: CircleImageView = itemView.findViewById(R.id.imgMascota)
@@ -43,10 +46,9 @@ class HomeAdapter(
             tvSintoma.text = cita.sintomas ?: "No especificado"
             tvTurno.text = "#${cita.id}"
 
-            val razaApi = mapearRazaParaApi(cita.raza)
 
             val apiService = RetrofitRazas.instance.create(DogApiService::class.java)
-            val call = apiService.obtenerImagenPorRaza(razaApi)
+            val call = apiService.obtenerImagenPorRaza(cita.raza)
 
             call.enqueue(object : Callback<ImagenRazaResponse> {
                 override fun onResponse(
@@ -75,22 +77,9 @@ class HomeAdapter(
             }
         }
 
-        private fun mapearRazaParaApi(raza: String): String {
-            return when (raza.lowercase().trim()) {
-                "pastor", "pastor alemán", "pastor aleman" -> "germanshepherd"
-                "pitbull" -> "pitbull"
-                "labrador" -> "labrador"
-                "doberman" -> "doberman"
-                "pug" -> "pug"
-                "husky" -> "husky"
-                "criollo", "mestizo", "sin raza" -> "mix"
-                else -> "dog"
-            }
+        fun updateList(newList: List<Cita>) {
+            citas = newList
+            notifyDataSetChanged()
         }
-    }
-
-    fun updateList(newList: List<Cita>) {
-        citas = newList
-        notifyDataSetChanged()
     }
 }
