@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Autenticación con Biometría")
         builder.setMessage("Ingrese su huella digital")
-        builder.setNegativeButton("Aceptar") { dialog, _ ->
+        builder.setNegativeButton("Cancelar") { dialog, _ ->
             dialog.dismiss()
         }
 

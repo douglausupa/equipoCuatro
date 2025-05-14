@@ -6,10 +6,12 @@ import com.example.aplicacioncitas.R
 import com.example.aplicacioncitas.view.fragments.DetalleCitaFragment
 
 class DetalleCitaActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detalle_cita)
+        setContentView(R.layout.activity_detalle_cita) // <- NO el fragmento
 
+        // Agregar el fragmento al contenedor
         if (savedInstanceState == null) {
             val fragment = DetalleCitaFragment().apply {
                 arguments = intent.extras

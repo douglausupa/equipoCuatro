@@ -25,7 +25,7 @@
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ico_arrow_back"
+            android:src="@drawable/arrowback"
             android:background="@android:color/transparent"
             android:padding="16dp"
             android:contentDescription="@string/volver"
@@ -135,7 +135,9 @@
                     android:id="@+id/dropdownSintomas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="none"
+
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Botón Guardar -->

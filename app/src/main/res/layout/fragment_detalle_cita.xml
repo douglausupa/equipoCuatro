@@ -15,10 +15,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
+
+    <TextView
         android:id="@+id/tituloNombreMascota"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -28,8 +28,9 @@
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="@id/toolbar"
         android:background="@android:color/transparent"
+        android:enabled="false"
         android:hint="@string/nombreMascota"
-        app:layout_constraintEnd_toEndOf="@id/toolbar" />
+        app:layout_constraintEnd_toEndOf="@id/toolbar"/>
 
     <ImageButton
         android:id="@+id/back_button"
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/arrowback"
         android:background="@android:color/transparent"
-        android:padding="16dp"
+        android:paddingLeft="40dp"
         android:contentDescription="@string/volver"
         app:tint="@color/buttonBackgroundColor"
         app:layout_constraintStart_toStartOf="@id/toolbar"
@@ -92,6 +93,7 @@
                 android:paddingTop="90dp"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
+                android:enabled="false"
                 android:background="@android:color/transparent"
                 android:textStyle="bold" />
 
@@ -101,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="4dp"
+                android:enabled="false"
                 android:textColor="@android:color/black"
                 android:background="@android:color/transparent"
                 android:textSize="15sp" />
@@ -120,7 +123,9 @@
                     android:id="@+id/tvPropietario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
                     android:text="@string/propietario"
+                    android:textSize="16dp"
                     android:textColor="@android:color/black" />
 
                 <EditText
@@ -132,6 +137,7 @@
                     android:enabled="false"
                     android:inputType="text"
                     android:background="@android:color/transparent"
+                    android:paddingLeft="8dp"
                     android:hint="@string/nombrePropietario"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -146,8 +152,9 @@
                     android:id="@+id/tvTelefono"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="18dp"
+                    android:textSize="16dp"
                     android:text="@string/tel_fono"
                     android:textColor="@android:color/black" />
 
@@ -157,11 +164,12 @@
                     android:layout_height="48dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
+                    android:background="@android:color/transparent"
                     android:enabled="false"
                     android:inputType="text"
-                    android:textSize="16sp"
+                    android:paddingLeft="8dp"
                     android:hint="@string/telefono"
-                    android:background="@android:color/transparent" />
+                    android:textSize="16sp"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -171,7 +179,7 @@
         android:id="@+id/btnEditar"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/azul_oscuro"
         android:src="@drawable/ic_pencil"
         android:background="@drawable/boton_negro_redondeado"
         android:elevation="6dp"
@@ -210,6 +218,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+
+            android:layout_margin="8dp"
             android:contentDescription="@string/desc_imagen_mascota" />
 
     </androidx.cardview.widget.CardView>
