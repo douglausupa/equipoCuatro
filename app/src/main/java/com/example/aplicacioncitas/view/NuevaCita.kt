@@ -138,6 +138,7 @@ class NuevaCita : AppCompatActivity() {
             try {
                 citaRepository.insertar(cita)
 
+<<<<<<< HEAD
                 runOnUiThread {
                     Toast.makeText(this@NuevaCita, "Cita guardada!", Toast.LENGTH_SHORT).show()
                     limpiarCampos()
@@ -148,6 +149,70 @@ class NuevaCita : AppCompatActivity() {
             } catch (e: Exception) {
                 runOnUiThread {
                     Toast.makeText(this@NuevaCita, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+=======
+        private fun configurarInsets() {
+            ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
+        }
+
+        private fun configurarValidacion() {
+            val campos = listOf(
+                binding.etNombreMascota,
+                binding.autoCompleteRaza,
+                binding.etNombrePropietario,
+                binding.etTelefono,
+                binding.dropdownSintomas
+            )
+
+            campos.forEach { campo ->
+                campo.addTextChangedListener(object : android.text.TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                    override fun afterTextChanged(s: Editable?) {
+                        validarCamposObligatorios()
+                    }
+                })
+            }
+        }
+
+        private fun guardarCita() {
+            // Validar síntomas antes de guardar
+            val sintomas = binding.dropdownSintomas.text.toString().trim()
+
+            if (sintomas.isEmpty()) {
+                Toast.makeText(this, "Selecciona un síntoma", Toast.LENGTH_SHORT).show()
+                return // Salir del método sin guardar
+            }
+
+            val cita = Cita(
+                nombrePropietario = binding.etNombrePropietario.text.toString().trim(),
+                nombreMascota = binding.etNombreMascota.text.toString().trim(),
+                raza = binding.autoCompleteRaza.text.toString(),
+                telefono = binding.etTelefono.text.toString().trim(),
+                sintomas = sintomas // Usamos la variable ya validada
+            )
+
+            lifecycleScope.launch {
+                try {
+                    citaRepository.insertar(cita)
+
+                    runOnUiThread {
+                        Toast.makeText(this@NuevaCita, "Cita guardada!", Toast.LENGTH_SHORT).show()
+                        limpiarCampos()
+                        val intent = Intent(this@NuevaCita, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                } catch (e: Exception) {
+                    runOnUiThread {
+                        Toast.makeText(this@NuevaCita, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+>>>>>>> c56f0415f19d338e4bf026c0e6644b1c9eb26550
                 }
             }
         }
@@ -161,7 +226,16 @@ class NuevaCita : AppCompatActivity() {
         binding.dropdownSintomas.text?.clear()
     }
 
+<<<<<<< HEAD
     private fun validarCamposObligatorios() {
+=======
+        private fun validarCamposObligatorios() {
+            // Validar solo los 4 campos principales (sin síntomas)
+            val camposCompletos = binding.etNombreMascota.text?.isNotEmpty() == true &&
+                    binding.autoCompleteRaza.text?.isNotEmpty() == true &&
+                    binding.etNombrePropietario.text?.isNotEmpty() == true &&
+                    binding.etTelefono.text?.isNotEmpty() == true
+>>>>>>> c56f0415f19d338e4bf026c0e6644b1c9eb26550
 
         val camposCompletos = binding.etNombreMascota.text?.isNotEmpty() == true &&
                 binding.autoCompleteRaza.text?.isNotEmpty() == true &&
