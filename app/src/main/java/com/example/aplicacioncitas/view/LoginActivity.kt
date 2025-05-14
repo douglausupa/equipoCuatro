@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
                     super.onAuthenticationSucceeded(result)
                     Toast.makeText(applicationContext, "Acceso concedido", Toast.LENGTH_SHORT).show()
 
-                    // Navegar a HomeActivity
+
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)
                     finish()

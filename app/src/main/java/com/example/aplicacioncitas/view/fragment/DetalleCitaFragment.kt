@@ -34,7 +34,7 @@ class DetalleCitaFragment : Fragment() {
     private var _binding: FragmentDetalleCitaBinding? = null
     private val binding get() = _binding!!
 
-    // Declaración del ViewModel fuera de onViewCreated
+
     private lateinit var viewModel: DetalleCitaViewModel
 
     private var nombrePropietario: String? = null
