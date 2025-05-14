@@ -137,6 +137,7 @@
                     android:enabled="false"
                     android:inputType="text"
                     android:background="@android:color/transparent"
+                    android:paddingLeft="8dp"
                     android:hint="@string/nombrePropietario"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -166,6 +167,7 @@
                     android:background="@android:color/transparent"
                     android:enabled="false"
                     android:inputType="text"
+                    android:paddingLeft="8dp"
                     android:hint="@string/telefono"
                     android:textSize="16sp"/>
 
@@ -177,7 +179,7 @@
         android:id="@+id/btnEditar"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/azul_oscuro"
         android:src="@drawable/ic_pencil"
         android:background="@drawable/boton_negro_redondeado"
         android:elevation="6dp"

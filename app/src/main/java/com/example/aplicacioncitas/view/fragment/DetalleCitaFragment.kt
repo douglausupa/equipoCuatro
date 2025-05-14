@@ -88,6 +88,7 @@ class DetalleCitaFragment : Fragment() {
         binding.etSintomas.setText(sintomas)
         id?.let {
             binding.tvTurno.text = it // Mostrar el ID en el TextView
+
         }
 
         eliminar()
