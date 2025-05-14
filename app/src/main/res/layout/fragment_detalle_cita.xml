@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/arrowback"
         android:background="@android:color/transparent"
-        android:padding="16dp"
+        android:paddingLeft="40dp"
         android:contentDescription="@string/volver"
         app:tint="@color/buttonBackgroundColor"
         app:layout_constraintStart_toStartOf="@id/toolbar"
