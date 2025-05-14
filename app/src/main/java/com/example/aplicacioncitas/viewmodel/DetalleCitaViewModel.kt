@@ -16,9 +16,9 @@ class DetalleCitaViewModel(private val citaRepository: CitaRepository) : ViewMod
         viewModelScope.launch {
             try {
                 val result = citaRepository.eliminarCitaPorId(id)
-                _citaEliminada.value = result // true si se eliminó correctamente
+                _citaEliminada.value = result
             } catch (e: Exception) {
-                _citaEliminada.value = false // Si ocurre algún error
+                _citaEliminada.value = false
             }
         }
     }
