@@ -118,30 +118,32 @@
         }
 
         private fun guardarCita() {
+            // Validar síntomas antes de guardar
+            val sintomas = binding.dropdownSintomas.text.toString().trim()
+
+            if (sintomas.isEmpty()) {
+                Toast.makeText(this, "Selecciona un síntoma", Toast.LENGTH_SHORT).show()
+                return // Salir del método sin guardar
+            }
+
             val cita = Cita(
                 nombrePropietario = binding.etNombrePropietario.text.toString().trim(),
                 nombreMascota = binding.etNombreMascota.text.toString().trim(),
                 raza = binding.autoCompleteRaza.text.toString(),
                 telefono = binding.etTelefono.text.toString().trim(),
-                sintomas = binding.dropdownSintomas.text.toString().trim()
+                sintomas = sintomas // Usamos la variable ya validada
             )
 
             lifecycleScope.launch {
                 try {
                     citaRepository.insertar(cita)
 
-                    // Verificación inmediata
-                    val citasGuardadas = citaRepository.obtenerTodasLasCitas()
-                    Log.d("DB_DEBUG", "Citas en DB: ${citasGuardadas.size}")
-
                     runOnUiThread {
                         Toast.makeText(this@NuevaCita, "Cita guardada!", Toast.LENGTH_SHORT).show()
                         limpiarCampos()
-
-                        // Navegar a HomeActivity
                         val intent = Intent(this@NuevaCita, HomeActivity::class.java)
                         startActivity(intent)
-                        finish() // Opcional: cierra esta actividad para no acumularla en la pila
+                        finish()
                     }
                 } catch (e: Exception) {
                     runOnUiThread {
@@ -160,11 +162,11 @@
         }
 
         private fun validarCamposObligatorios() {
+            // Validar solo los 4 campos principales (sin síntomas)
             val camposCompletos = binding.etNombreMascota.text?.isNotEmpty() == true &&
                     binding.autoCompleteRaza.text?.isNotEmpty() == true &&
                     binding.etNombrePropietario.text?.isNotEmpty() == true &&
-                    binding.etTelefono.text?.isNotEmpty() == true &&
-                    binding.dropdownSintomas.text?.isNotEmpty() == true
+                    binding.etTelefono.text?.isNotEmpty() == true
 
             binding.btnGuardarCita.isEnabled = camposCompletos
         }
