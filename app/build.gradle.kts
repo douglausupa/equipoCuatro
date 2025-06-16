@@ -4,7 +4,6 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
 }
-
 android {
     namespace = "com.example.aplicacioncitas"
     compileSdk = 35
@@ -66,6 +65,10 @@ android {
 }
 
 dependencies {
+    // FireBase
+    implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
+
     // Biometría
     implementation("androidx.biometric:biometric:1.2.0-alpha04")
 
@@ -144,3 +147,5 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
+
+apply(plugin = "com.google.gms.google-services")
