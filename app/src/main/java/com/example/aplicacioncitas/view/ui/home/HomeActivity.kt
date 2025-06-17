@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.data.AppDatabase
 import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.view.NuevaCita
 import com.example.aplicacioncitas.view.DetalleCitaActivity

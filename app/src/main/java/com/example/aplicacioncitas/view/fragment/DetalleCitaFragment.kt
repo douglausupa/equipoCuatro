@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.data.AppDatabase
 import com.example.aplicacioncitas.databinding.FragmentDetalleCitaBinding
 import com.example.aplicacioncitas.model.Cita
 import com.example.aplicacioncitas.model.ImagenRazaResponse
