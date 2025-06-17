@@ -1,74 +1,86 @@
-package com.example.aplicacioncitas.view
+package com.example.aplicacioncitas.view.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
-import com.airbnb.lottie.LottieAnimationView
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.view.ui.home.HomeActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var etEmail: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var btnLogin: Button
+    private lateinit var tvRegister: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val animHuella = findViewById<LottieAnimationView>(R.id.animFingerprint)
+        auth = FirebaseAuth.getInstance()
 
-        animHuella.setOnClickListener {
-            mostrarDialogoBiometrico()
+        etEmail = findViewById(R.id.etEmail)
+        etPassword = findViewById(R.id.etPassword)
+        btnLogin = findViewById(R.id.btnLogin)
+        tvRegister = findViewById(R.id.tvRegister)
+
+        tvRegister.isEnabled = false
+        tvRegister.alpha = 0.5f
+
+        // Habilita el botón "Regístrate" solo si los dos campos están llenos
+        val textWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val emailFilled = etEmail.text.toString().isNotEmpty()
+                val passwordFilled = etPassword.text.toString().isNotEmpty()
+                val enable = emailFilled && passwordFilled
+                tvRegister.isEnabled = enable
+                tvRegister.alpha = if (enable) 1f else 0.5f
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         }
-    }
 
-    private fun mostrarDialogoBiometrico() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Autenticación con Biometría")
-        builder.setMessage("Ingrese su huella digital")
-        builder.setNegativeButton("Aceptar") { dialog, _ ->
-            dialog.dismiss()
+        etEmail.addTextChangedListener(textWatcher)
+        etPassword.addTextChangedListener(textWatcher)
+
+        tvRegister.setOnClickListener {
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        val intent = Intent(this, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Error en el registro", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
 
-        builder.setOnDismissListener {
-            iniciarBiometria()
+        btnLogin.setOnClickListener {
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        val intent = Intent(this, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
-        builder.show()
-    }
-
-    private fun iniciarBiometria() {
-        val executor = ContextCompat.getMainExecutor(this)
-        val biometricPrompt = BiometricPrompt(this, executor,
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    Toast.makeText(applicationContext, "Acceso concedido", Toast.LENGTH_SHORT).show()
-
-                    // Navegar a HomeActivity
-                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    Toast.makeText(applicationContext, "Huella no reconocida", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    Toast.makeText(applicationContext, "Error: $errString", Toast.LENGTH_SHORT).show()
-                }
-            })
-
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Login con huella")
-            .setSubtitle("Toque el lector para autenticarse")
-            .setNegativeButtonText("Cancelar")
-            .build()
-
-        biometricPrompt.authenticate(promptInfo)
     }
 }

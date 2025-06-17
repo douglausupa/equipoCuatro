@@ -16,8 +16,9 @@
         android:theme="@style/Theme.AplicacionCitas"
         tools:targetApi="31">
 
+        <!-- AHORA el launcher es SplashActivity -->
         <activity
-            android:name=".view.ui.home.HomeActivity"
+            android:name=".view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,12 +26,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.ui.home.LoginActivity" />
+        <activity android:name=".view.ui.home.HomeActivity" />
         <activity android:name=".view.NuevaCita" />
         <activity android:name=".view.DetalleCitaActivity" />
         <activity android:name=".view.EditarCita" />
 
-
     </application>
+
 
 </manifest>
