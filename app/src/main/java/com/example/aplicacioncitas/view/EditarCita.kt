@@ -16,7 +16,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.data.AppDatabase
 import com.example.aplicacioncitas.databinding.ActivityEditDateBinding
 import com.example.aplicacioncitas.model.Cita
 import com.example.aplicacioncitas.repository.CitaRepository
@@ -37,14 +36,14 @@ class EditarCita : AppCompatActivity() {
 
         enableEdgeToEdge()
 
-        // Inicializar la base de datos y ViewModel de la cita
-        val dao = AppDatabase.getDatabase(this).citaDao()
-        val repository = CitaRepository(dao)
-        val viewModelFactory = CitaViewModelFactory(repository)
-        citaViewModel = ViewModelProvider(this, viewModelFactory)[EditarCitaViewModel::class.java]
+
+        //val dao = AppDatabase.getDatabase(this).citaDao()
+        //val repository = CitaRepository(dao)
+        //val viewModelFactory = CitaViewModelFactory(repository)
+        //citaViewModel = ViewModelProvider(this, viewModelFactory)[EditarCitaViewModel::class.java]
         razasViewModel = ViewModelProvider(this)[RazasViewModel::class.java]
 
-        // Obtener la cita enviada desde la otra actividad
+
         val cita = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("cita", Cita::class.java)
         } else {
@@ -52,7 +51,7 @@ class EditarCita : AppCompatActivity() {
             intent.getParcelableExtra("cita")
         }
 
-        // Mostrar los datos en la vista
+
         cita?.let {
             binding.etNombrePropietario.setText(it.nombrePropietario)
             binding.autoCompleteRaza.setText(it.raza)
@@ -60,7 +59,7 @@ class EditarCita : AppCompatActivity() {
             binding.etNombreMascota.setText(it.nombreMascota)
         }
 
-        // Cargar razas desde la API
+
         razasViewModel.fetchBreeds()
         razasViewModel.breedList.observe(this) { razas ->
             val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, razas)
@@ -68,7 +67,7 @@ class EditarCita : AppCompatActivity() {
             binding.autoCompleteRaza.threshold = 2
         }
 
-        // Configurar validaciones
+
         validarlimitecaracteres()
         setupTextWatchers()
         validarbotoneditar()

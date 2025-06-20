@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/arrowback"
         android:background="@android:color/transparent"
-        android:padding="16dp"
+        android:paddingLeft="40dp"
         android:contentDescription="@string/volver"
         app:tint="@color/buttonBackgroundColor"
         app:layout_constraintStart_toStartOf="@id/toolbar"
@@ -65,17 +65,30 @@
 
             <TextView
                 android:id="@+id/tvTurno"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="end"
                 android:hint="@string/numeroCita"
-                android:textColor="@color/red"
+                android:textColor="@color/buttonBackgroundColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/numeral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="#"
+                android:textColor="@color/buttonBackgroundColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvTurno"
+                app:layout_constraintHorizontal_chainStyle="packed" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -137,6 +150,7 @@
                     android:enabled="false"
                     android:inputType="text"
                     android:background="@android:color/transparent"
+                    android:paddingLeft="8dp"
                     android:hint="@string/nombrePropietario"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -166,6 +180,7 @@
                     android:background="@android:color/transparent"
                     android:enabled="false"
                     android:inputType="text"
+                    android:paddingLeft="8dp"
                     android:hint="@string/telefono"
                     android:textSize="16sp"/>
 
@@ -177,7 +192,7 @@
         android:id="@+id/btnEditar"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/azul_oscuro"
         android:src="@drawable/ic_pencil"
         android:background="@drawable/boton_negro_redondeado"
         android:elevation="6dp"
@@ -216,9 +231,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+
             android:layout_margin="8dp"
             android:contentDescription="@string/desc_imagen_mascota" />
 
     </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

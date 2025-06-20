@@ -20,6 +20,7 @@ navVersion = "2.3.5"
 recyclerview = "1.4.0"
 retrofit = "2.9.0"
 firebaseAppdistributionGradle = "5.1.1"
+firebaseAuthKtx = "23.2.1"
 
 [libraries]
 circleimageview = { group = "de.hdodenhof", name = "circleimageview", version = "3.1.0" }
@@ -45,6 +46,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 firebase-appdistribution-gradle = { group = "com.google.firebase", name = "firebase-appdistribution-gradle", version.ref = "firebaseAppdistributionGradle" }
+firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 
 [plugins]
 google-services = { id = "com.google.gms.google-services", version = "4.4.0" }

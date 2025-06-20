@@ -1,32 +1,37 @@
 package com.example.aplicacioncitas.repository
 
-
-import androidx.lifecycle.LiveData
-import com.example.aplicacioncitas.data.CitaDao
 import com.example.aplicacioncitas.model.Cita
-import kotlinx.coroutines.flow.Flow
+import com.google.firebase.firestore.FirebaseFirestore
+// import com.google.firebase.firestore.toObject
+import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class CitaRepository(private val citaDao: CitaDao) {
+class CitaRepository @Inject constructor() {
+    private val db = FirebaseFirestore.getInstance()
+    private val citasCollection = db.collection("citas")
 
     suspend fun insertar(cita: Cita) {
-        citaDao.insertarCita(cita)
+        citasCollection.document(cita.id.toString()).set(cita).await()
     }
 
     suspend fun actualizar(cita: Cita) {
-        citaDao.actualizarCita(cita)
+        citasCollection.document(cita.id.toString()).set(cita).await()
     }
 
+    // suspend fun obtenerPorId(id: Int): Cita? {
+    //     return citasCollection.document(id.toString()).get().await().toObject<Cita>()
+    // }
 
-    suspend fun obtenerPorId(id: Int): Cita? {
-        return citaDao.obtenerCitaPorId(id)
-    }
-
-    suspend fun obtenerTodasLasCitas(): List<Cita> {
-        return citaDao.obtenerTodasLasCitas()
-    }
+    // suspend fun obtenerTodasLasCitas(): List<Cita> {
+    //     return citasCollection.get().await().toObjects(Cita::class.java)
+    // }
 
     suspend fun eliminarCitaPorId(id: Int): Boolean {
-        val rowsDeleted = citaDao.eliminarCitaPorId(id)
-        return rowsDeleted > 0
+        return try {
+            citasCollection.document(id.toString()).delete().await()
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }

@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.data.AppDatabase
 import com.example.aplicacioncitas.databinding.FragmentDetalleCitaBinding
 import com.example.aplicacioncitas.model.Cita
 import com.example.aplicacioncitas.model.ImagenRazaResponse
@@ -34,7 +33,7 @@ class DetalleCitaFragment : Fragment() {
     private var _binding: FragmentDetalleCitaBinding? = null
     private val binding get() = _binding!!
 
-    // Declaración del ViewModel fuera de onViewCreated
+
     private lateinit var viewModel: DetalleCitaViewModel
 
     private var nombrePropietario: String? = null
@@ -67,11 +66,11 @@ class DetalleCitaFragment : Fragment() {
     ): View {
         _binding = FragmentDetalleCitaBinding.inflate(inflater, container, false)
 
-        val citaDao = AppDatabase.getDatabase(requireContext()).citaDao()
-        val repository = CitaRepository(citaDao)
+        //val citaDao = AppDatabase.getDatabase(requireContext()).citaDao()
+        //val repository = CitaRepository(citaDao)
 
-        val factory = DetalleCitaViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, factory).get(DetalleCitaViewModel::class.java)
+        //val factory = DetalleCitaViewModelFactory(repository)
+        //viewModel = ViewModelProvider(this, factory).get(DetalleCitaViewModel::class.java)
 
         dogApiService = RetrofitRazas.instance.create(DogApiService::class.java)
         return binding.root
@@ -88,6 +87,7 @@ class DetalleCitaFragment : Fragment() {
         binding.etSintomas.setText(sintomas)
         id?.let {
             binding.tvTurno.text = it // Mostrar el ID en el TextView
+
         }
 
         eliminar()

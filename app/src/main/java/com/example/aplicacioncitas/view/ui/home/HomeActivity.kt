@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.data.AppDatabase
 import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.view.NuevaCita
 import com.example.aplicacioncitas.view.DetalleCitaActivity
@@ -30,8 +29,8 @@ class HomeActivity : AppCompatActivity() {
         recyclerViewCitas = findViewById(R.id.recyclerViewCitas)
         fabAddCita = findViewById(R.id.fabAddCita)
 
-        val database = AppDatabase.getDatabase(applicationContext)
-        citaRepository = CitaRepository(database.citaDao())
+        //val database = AppDatabase.getDatabase(applicationContext)
+        //citaRepository = CitaRepository(database.citaDao())
 
         setupRecyclerView()
         setupFab()
@@ -68,8 +67,8 @@ class HomeActivity : AppCompatActivity() {
 
     private fun cargarCitasDesdeBD() {
         lifecycleScope.launch {
-            val citas = citaRepository.obtenerTodasLasCitas()
-            homeAdapter.updateList(citas)
+            //val citas = citaRepository.obtenerTodasLasCitas()
+            //homeAdapter.updateList(citas)
         }
     }
 }

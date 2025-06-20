@@ -31,10 +31,11 @@ class LoginActivity : AppCompatActivity() {
         btnLogin = findViewById(R.id.btnLogin)
         tvRegister = findViewById(R.id.tvRegister)
 
+        // Inicialmente desactivado
         tvRegister.isEnabled = false
         tvRegister.alpha = 0.5f
 
-        // Habilita el botón "Regístrate" solo si los dos campos están llenos
+        // Validar campos
         val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val emailFilled = etEmail.text.toString().isNotEmpty()
@@ -51,22 +52,7 @@ class LoginActivity : AppCompatActivity() {
         etEmail.addTextChangedListener(textWatcher)
         etPassword.addTextChangedListener(textWatcher)
 
-        tvRegister.setOnClickListener {
-            val email = etEmail.text.toString().trim()
-            val password = etPassword.text.toString().trim()
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(this, "Error en el registro", Toast.LENGTH_SHORT).show()
-                    }
-                }
-        }
-
+        // Botón Login
         btnLogin.setOnClickListener {
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
@@ -74,13 +60,34 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        irAHome()
                     } else {
-                        Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Login incorrecto", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
+
+        // Botón Regístrate
+        tvRegister.setOnClickListener {
+            if (!tvRegister.isEnabled) return@setOnClickListener
+
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        irAHome()
+                    } else {
+                        Toast.makeText(this, "Error en el registro", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
+    }
+
+    private fun irAHome() {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }
