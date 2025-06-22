@@ -1,6 +1,6 @@
 package com.example.aplicacioncitas.repository
 
-import com.example.aplicacioncitas.model.CitaResponse
+import com.example.aplicacioncitas.model.Cita
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -29,15 +29,15 @@ class CitaRepository @Inject constructor() {
         documentRef.set(nuevaCita).await()
         return documentRef.id
     }*/
-    suspend fun insertarCita(citaResponse: CitaResponse): Long {
+    suspend fun insertarCita(cita: Cita): Long {
         val nextId = getNextId()
-        val nuevaCita = citaResponse.copy(id = nextId)
+        val nuevaCita = cita.copy(id = nextId)
         citasCollection.document(nextId.toString()).set(nuevaCita).await()
         return nextId
     }
 
-    suspend fun actualizar(citaResponse: CitaResponse) {
-        citasCollection.document(citaResponse.id.toString()).set(citaResponse).await()
+    suspend fun actualizar(cita: Cita) {
+        citasCollection.document(cita.id.toString()).set(cita).await()
     }
 
     /*suspend fun obtenerPorId(id: Int): CitaResponse? {

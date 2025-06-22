@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.databinding.FragmentDetalleCitaBinding
-import com.example.aplicacioncitas.model.CitaResponse
+import com.example.aplicacioncitas.model.Cita
 import com.example.aplicacioncitas.model.ImagenRazaResponse
 import com.example.aplicacioncitas.view.EditarCita
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
@@ -119,7 +119,7 @@ class DetalleCitaFragment : Fragment() {
 
     private fun editarcita() {
         binding.btnEditar.setOnClickListener {
-            val citaResponse = CitaResponse(
+            val cita = Cita(
                 nombrePropietario = binding.etPropietario.text.toString(),
                 nombreMascota = binding.tituloNombreMascota.text.toString(),
                 raza = binding.etRaza.text.toString(),
@@ -129,7 +129,7 @@ class DetalleCitaFragment : Fragment() {
             )
 
             val intent = Intent(requireContext(), EditarCita::class.java).apply {
-                putExtra("cita", citaResponse) // Envía el objeto completo
+                putExtra("cita", cita) // Envía el objeto completo
             }
             startActivity(intent)
         }

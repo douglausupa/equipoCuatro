@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "citas")
 @Parcelize
-data class CitaResponse(
+data class Cita(
     var id: Long = 0,
     val userId: String = "",
     val nombrePropietario: String = "",
