@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.model.Cita
+import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.model.ImagenRazaResponse
 import com.example.aplicacioncitas.webservice.DogApiService
 import com.example.aplicacioncitas.webservice.RetrofitRazas
@@ -17,8 +17,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeAdapter(
-    private var citas: List<Cita>,
-    private val onItemClick: (Cita) -> Unit
+    private var citaResponses: List<CitaResponse>,
+    private val onItemClick: (CitaResponse) -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.CitaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitaViewHolder {
@@ -27,10 +27,10 @@ class HomeAdapter(
     }
 
     override fun onBindViewHolder(holder: CitaViewHolder, position: Int) {
-        holder.bind(citas[position])
+        holder.bind(citaResponses[position])
     }
 
-    override fun getItemCount(): Int = citas.size
+    override fun getItemCount(): Int = citaResponses.size
 
     inner class CitaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgMascota: CircleImageView = itemView.findViewById(R.id.imgMascota)
@@ -38,12 +38,12 @@ class HomeAdapter(
         private val tvSintoma: TextView = itemView.findViewById(R.id.tvSintoma)
         private val tvTurno: TextView = itemView.findViewById(R.id.tvTurno)
 
-        fun bind(cita: Cita) {
-            tvNombreMascota.text = cita.nombreMascota
-            tvSintoma.text = cita.sintomas ?: "No especificado"
-            tvTurno.text = "#${cita.id}"
+        fun bind(citaResponse: CitaResponse) {
+            tvNombreMascota.text = citaResponse.nombreMascota
+            tvSintoma.text = citaResponse.sintomas ?: "No especificado"
+            tvTurno.text = "#${citaResponse.id}"
 
-            val razaApi = normalizarRazaParaApi(cita.raza)
+            val razaApi = normalizarRazaParaApi(citaResponse.raza)
 
             val apiService = RetrofitRazas.instance.create(DogApiService::class.java)
             val call = apiService.obtenerImagenPorRaza(razaApi)
@@ -71,7 +71,7 @@ class HomeAdapter(
             })
 
             itemView.setOnClickListener {
-                onItemClick(cita)
+                onItemClick(citaResponse)
             }
         }
 
@@ -87,8 +87,8 @@ class HomeAdapter(
         }
     }
 
-    fun updateList(newList: List<Cita>) {
-        citas = newList
+    fun updateList(newList: List<CitaResponse>) {
+        citaResponses = newList
         notifyDataSetChanged()
     }
 }
