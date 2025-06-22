@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.aplicacioncitas"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
-    <application
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/appName"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.AplicacionCitas"
-        tools:targetApi="31">
+  <application
+      android:allowBackup="true"
+      android:dataExtractionRules="@xml/data_extraction_rules"
+      android:fullBackupContent="@xml/backup_rules"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/appName"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:supportsRtl="true"
+      android:theme="@style/Theme.AplicacionCitas"
+      tools:targetApi="31">
 
+      <!-- AHORA el launcher es SplashActivity -->
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,12 +27,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".view.ui.home.LoginActivity" />
         <activity android:name=".view.ui.home.HomeActivity" />
         <activity android:name=".view.NuevaCita" />
         <activity android:name=".view.DetalleCitaActivity" />
         <activity android:name=".view.EditarCita" />
 
-
     </application>
+
 
 </manifest>

@@ -29,8 +29,8 @@ class HomeActivity : AppCompatActivity() {
         recyclerViewCitas = findViewById(R.id.recyclerViewCitas)
         fabAddCita = findViewById(R.id.fabAddCita)
 
-        val database = AppDatabase.getDatabase(applicationContext)
-        citaRepository = CitaRepository(database.citaDao())
+        //val database = AppDatabase.getDatabase(applicationContext)
+        //citaRepository = CitaRepository(database.citaDao())
 
         setupRecyclerView()
         setupFab()
@@ -67,8 +67,8 @@ class HomeActivity : AppCompatActivity() {
 
     private fun cargarCitasDesdeBD() {
         lifecycleScope.launch {
-            val citas = citaRepository.obtenerTodasLasCitas()
-            homeAdapter.updateList(citas)
+            //val citas = citaRepository.obtenerTodasLasCitas()
+            //homeAdapter.updateList(citas)
         }
     }
 }

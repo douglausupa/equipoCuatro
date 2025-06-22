@@ -6,51 +6,114 @@
     android:layout_height="match_parent"
     android:background="@color/gris_oscuro">
 
-    <!-- Imagen del perro (cabeza) -->
-
-
+    <!-- Imagen del perro -->
     <ImageView
         android:id="@+id/imgDog"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="-10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/perro_cabeza"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Título de la app -->
-
+    <!-- Título -->
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="232dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="236dp"
-        android:fontFamily="@font/lilite_one"
-        android:letterSpacing="0.05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="DogApp"
-        android:textColor="@color/blanco"
         android:textSize="60sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        android:letterSpacing="0.05"
+        android:fontFamily="@font/lilite_one"
+        android:textColor="@color/blanco"
+        app:layout_constraintTop_toBottomOf="@id/imgDog"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imgDog" />
-
-    <!-- Animación de huella -->
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animFingerprint"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginBottom="104dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/fingerprint_anim" />
+        android:layout_marginTop="-40dp"/>
 
+    <!-- Campo de Email -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/blanco"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeWidth="2dp"
+        app:boxStrokeWidthFocused="2dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="40"
+            android:textColor="@color/blanco"
+            android:inputType="textEmailAddress"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo de Password -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/blanco"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeWidth="2dp"
+        app:boxStrokeWidthFocused="2dp"
+        app:layout_constraintTop_toBottomOf="@id/emailLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="8"
+            android:inputType="numberPassword"
+            android:textColor="@color/blanco"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Botón de Login -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/lilite_one"
+        android:layout_marginTop="24dp"
+        app:cornerRadius="50dp"
+        app:layout_constraintTop_toBottomOf="@id/passwordLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="48dp"/>
+
+    <!-- Texto de Registro -->
+    <TextView
+        android:id="@+id/tvRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrate"
+        android:textColor="@color/blanco"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

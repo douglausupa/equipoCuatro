@@ -5,28 +5,40 @@ import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.example.aplicacioncitas.R
 import com.example.aplicacioncitas.databinding.NuevaCitaBinding
-import com.example.aplicacioncitas.model.Cita
-import com.example.aplicacioncitas.repository.CitaRepository
-import com.example.aplicacioncitas.view.ui.home.HomeActivity
-import androidx.lifecycle.ViewModelProvider
+import com.example.aplicacioncitas.viewmodel.NuevaCitaViewModel
 import com.example.aplicacioncitas.viewmodel.RazasViewModel
-import kotlinx.coroutines.launch
-import com.example.aplicacioncitas.databinding.ActivityEditDateBinding
+import com.example.aplicacioncitas.view.ui.home.HomeActivity
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class NuevaCita : AppCompatActivity() {
 
     private lateinit var binding: NuevaCitaBinding
-    private lateinit var citaRepository: CitaRepository
-    private lateinit var razasViewModel: RazasViewModel
+    private val nuevaCitaViewModel: NuevaCitaViewModel by viewModels()
+    private val razasViewModel: RazasViewModel by viewModels()
+
+
+    private fun imprimirTodasLasCitas() {
+        Firebase.firestore.collection("citas")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                snapshot.documents.forEach { doc ->
+                    Log.d("PRUEBAS", "CITA: ${doc.id} - ${doc.data}")
+                }
+                Log.d("PRUEBAS", "Total citas: ${snapshot.size()}")
+            }
+            .addOnFailureListener { e ->
+                Log.e("PRUEBAS", "Error: ${e.message}")
+            }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,20 +46,10 @@ class NuevaCita : AppCompatActivity() {
         binding = NuevaCitaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        val database = AppDatabase.getDatabase(applicationContext)
-        citaRepository = CitaRepository(database.citaDao())
-
-
-        razasViewModel = ViewModelProvider(this)[RazasViewModel::class.java]
-
-
         configurarDropdown()
         configurarInsets()
         configurarValidacion()
         cargarRazas()
-
-
 
         binding.btnGuardarCita.setOnClickListener {
             guardarCita()
@@ -56,6 +58,7 @@ class NuevaCita : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             navegarAHome()
         }
+
     }
 
     private fun cargarRazas() {
@@ -116,7 +119,6 @@ class NuevaCita : AppCompatActivity() {
     }
 
     private fun guardarCita() {
-
         val sintomas = binding.dropdownSintomas.text.toString().trim()
 
         if (sintomas.isEmpty()) {
@@ -124,31 +126,27 @@ class NuevaCita : AppCompatActivity() {
             return
         }
 
-        val cita = Cita(
+        nuevaCitaViewModel.guardarCita(
             nombrePropietario = binding.etNombrePropietario.text.toString().trim(),
             nombreMascota = binding.etNombreMascota.text.toString().trim(),
             raza = binding.autoCompleteRaza.text.toString(),
             telefono = binding.etTelefono.text.toString().trim(),
-            sintomas = sintomas
-        )
+            sintomas = sintomas,
+            onSuccess = {
+                Toast.makeText(this, "Cita guardada!", Toast.LENGTH_SHORT).show()
+                limpiarCampos()
 
-        lifecycleScope.launch {
-            try {
-                citaRepository.insertar(cita)
+                // Imprimir todas las citas después de guardar
+                imprimirTodasLasCitas()
 
-                runOnUiThread {
-                    Toast.makeText(this@NuevaCita, "Cita guardada!", Toast.LENGTH_SHORT).show()
-                    limpiarCampos()
-                    val intent = Intent(this@NuevaCita, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-            } catch (e: Exception) {
-                runOnUiThread {
-                    Toast.makeText(this@NuevaCita, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            },
+            onError = { error ->
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
             }
-        }
+        )
     }
 
     private fun limpiarCampos() {

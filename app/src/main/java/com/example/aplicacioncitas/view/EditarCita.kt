@@ -11,16 +11,13 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.aplicacioncitas.R
 import com.example.aplicacioncitas.databinding.ActivityEditDateBinding
-import com.example.aplicacioncitas.model.Cita
-import com.example.aplicacioncitas.repository.CitaRepository
+import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
-import com.example.aplicacioncitas.viewmodel.CitaViewModelFactory
 import com.example.aplicacioncitas.viewmodel.EditarCitaViewModel
 import com.example.aplicacioncitas.viewmodel.RazasViewModel
 
@@ -37,22 +34,22 @@ class EditarCita : AppCompatActivity() {
         enableEdgeToEdge()
 
 
-        val dao = AppDatabase.getDatabase(this).citaDao()
-        val repository = CitaRepository(dao)
-        val viewModelFactory = CitaViewModelFactory(repository)
-        citaViewModel = ViewModelProvider(this, viewModelFactory)[EditarCitaViewModel::class.java]
+        //val dao = AppDatabase.getDatabase(this).citaDao()
+        //val repository = CitaRepository(dao)
+        //val viewModelFactory = CitaViewModelFactory(repository)
+        //citaViewModel = ViewModelProvider(this, viewModelFactory)[EditarCitaViewModel::class.java]
         razasViewModel = ViewModelProvider(this)[RazasViewModel::class.java]
 
 
-        val cita = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("cita", Cita::class.java)
+        val citaResponse = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("cita", CitaResponse::class.java)
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra("cita")
         }
 
 
-        cita?.let {
+        citaResponse?.let {
             binding.etNombrePropietario.setText(it.nombrePropietario)
             binding.autoCompleteRaza.setText(it.raza)
             binding.etTelefono.setText(it.telefono)
@@ -81,8 +78,8 @@ class EditarCita : AppCompatActivity() {
 
 
         binding.btneditarcita.setOnClickListener {
-            if (cita != null) {
-                val citaActualizada = cita.copy(
+            if (citaResponse != null) {
+                val citaActualizada = citaResponse.copy(
                     nombrePropietario = binding.etNombrePropietario.text.toString(),
                     nombreMascota = binding.etNombreMascota.text.toString(),
                     raza = binding.autoCompleteRaza.text.toString(),
