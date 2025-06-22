@@ -28,7 +28,6 @@ class CitaFirestoreHelper {
         return citasCollection.get().await().toObjects(CitaResponse::class.java)
     }
 
-    // Eliminar una cita
     suspend fun eliminarCitaPorId(id: Int) {
         citasCollection.document(id.toString()).delete().await()
     }
