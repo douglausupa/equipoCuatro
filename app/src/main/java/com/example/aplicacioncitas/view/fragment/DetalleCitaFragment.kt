@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.databinding.FragmentDetalleCitaBinding
 import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.model.ImagenRazaResponse
-import com.example.aplicacioncitas.view.EditarCita
+import com.example.aplicacioncitas.view.EditarCitaActivity
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
 import com.example.aplicacioncitas.viewmodel.DetalleCitaViewModel
 import com.example.aplicacioncitas.webservice.DogApiService
@@ -128,7 +128,7 @@ class DetalleCitaFragment : Fragment() {
                 /*id = binding.tvTurno.text.toString().toIntOrNull() ?: 0 // Asegúrate de que el ID es Int*/
             )
 
-            val intent = Intent(requireContext(), EditarCita::class.java).apply {
+            val intent = Intent(requireContext(), EditarCitaActivity::class.java).apply {
                 putExtra("cita", citaResponse) // Envía el objeto completo
             }
             startActivity(intent)

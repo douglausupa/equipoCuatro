@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -82,6 +83,11 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
+
+
+
+
+
     // Corrutinas
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
@@ -123,18 +129,28 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    
-    apply(plugin = "com.google.gms.google-services")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    testImplementation ("org.mockito:mockito-inline:4.5.1") // Permite mockear clases final
 
-    // Si usas libs.versions.toml descomenta estas líneas:
-    // implementation(libs.androidx.core.ktx)
-    // implementation(libs.androidx.appcompat)
-    // implementation(libs.material)
-    // implementation(libs.androidx.activity)
-    // implementation(libs.androidx.constraintlayout)
-    // implementation(libs.circleimageview)
-    // implementation(libs.firebase.appdistribution.gradle)
-    // testImplementation(libs.junit)
-    // androidTestImplementation(libs.androidx.junit)
-    // androidTestImplementation(libs.androidx.espresso.core)
+    // Hilt Core (versión principal)
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48") // ¡OJO! Cambiado de hilt-compiler
+
+    // Hilt para ViewModel
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0") // o navigation-fragment si no usas Compose
+    kapt("androidx.hilt:hilt-compiler:1.0.0") // Este queda igual
+
+    // Hilt Common (opcional, solo si lo usas)
+    implementation("androidx.hilt:hilt-common:1.0.0")
+
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.circleimageview)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

@@ -18,7 +18,9 @@ import com.example.aplicacioncitas.viewmodel.RazasViewModel
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NuevaCita : AppCompatActivity() {
 
     private lateinit var binding: NuevaCitaBinding
