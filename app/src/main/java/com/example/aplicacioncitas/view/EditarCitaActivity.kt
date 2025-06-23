@@ -10,21 +10,23 @@ import android.text.Editable
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.example.aplicacioncitas.R
 import com.example.aplicacioncitas.databinding.ActivityEditDateBinding
 import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
 import com.example.aplicacioncitas.viewmodel.EditarCitaViewModel
 import com.example.aplicacioncitas.viewmodel.RazasViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class EditarCita : AppCompatActivity() {
+@AndroidEntryPoint
+class EditarCitaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditDateBinding
-    private lateinit var citaViewModel: EditarCitaViewModel
-    private lateinit var razasViewModel: RazasViewModel
+    private val citaViewModel: EditarCitaViewModel by viewModels()
+    private val razasViewModel: RazasViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +40,6 @@ class EditarCita : AppCompatActivity() {
         //val repository = CitaRepository(dao)
         //val viewModelFactory = CitaViewModelFactory(repository)
         //citaViewModel = ViewModelProvider(this, viewModelFactory)[EditarCitaViewModel::class.java]
-        razasViewModel = ViewModelProvider(this)[RazasViewModel::class.java]
-
 
         val citaResponse = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("cita", CitaResponse::class.java)
