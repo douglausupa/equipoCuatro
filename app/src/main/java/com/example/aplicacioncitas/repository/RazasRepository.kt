@@ -4,8 +4,9 @@ import com.example.aplicacioncitas.model.RazasResponse
 import com.example.aplicacioncitas.webservice.ApiServiceRazas
 import com.example.aplicacioncitas.webservice.RetrofitRazas
 import retrofit2.Response
+import javax.inject.Inject
 
-class RazasRepository {
+class RazasRepository @Inject constructor() {
 
     private val api: ApiServiceRazas = RetrofitRazas.instance.create(ApiServiceRazas::class.java)
 
