@@ -17,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeAdapter(
-    private var citaResponses: List<CitaResponse>,
+    private var citas: List<CitaResponse>,
     private val onItemClick: (CitaResponse) -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.CitaViewHolder>() {
 
@@ -27,10 +27,15 @@ class HomeAdapter(
     }
 
     override fun onBindViewHolder(holder: CitaViewHolder, position: Int) {
-        holder.bind(citaResponses[position])
+        holder.bind(citas[position])
     }
 
-    override fun getItemCount(): Int = citaResponses.size
+    override fun getItemCount(): Int = citas.size
+
+    fun updateList(newList: List<CitaResponse>) {
+        citas = newList
+        notifyDataSetChanged()
+    }
 
     inner class CitaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgMascota: CircleImageView = itemView.findViewById(R.id.imgMascota)
@@ -38,42 +43,40 @@ class HomeAdapter(
         private val tvSintoma: TextView = itemView.findViewById(R.id.tvSintoma)
         private val tvTurno: TextView = itemView.findViewById(R.id.tvTurno)
 
-        fun bind(citaResponse: CitaResponse) {
-            tvNombreMascota.text = citaResponse.nombreMascota
-            tvSintoma.text = citaResponse.sintomas ?: "No especificado"
-            tvTurno.text = "#${citaResponse.id}"
+        fun bind(cita: CitaResponse) {
+            tvNombreMascota.text = cita.nombreMascota
+            tvSintoma.text = (cita.sintomas ?: "").ifEmpty { "No especificado" }
+            //tvTurno.text = "Turno: #${bindingAdapterPosition + 1}" // opcional
 
-            val razaApi = normalizarRazaParaApi(citaResponse.raza)
-
+            // Siempre cargar la imagen desde la API de la raza
+            val razaApi = normalizarRazaParaApi(cita.raza)
             val apiService = RetrofitRazas.instance.create(DogApiService::class.java)
-            val call = apiService.obtenerImagenPorRaza(razaApi)
 
-            call.enqueue(object : Callback<ImagenRazaResponse> {
+            apiService.obtenerImagenPorRaza(razaApi).enqueue(object : Callback<ImagenRazaResponse> {
                 override fun onResponse(
                     call: Call<ImagenRazaResponse>,
                     response: Response<ImagenRazaResponse>
                 ) {
-                    if (response.isSuccessful && response.body()?.status == "success") {
-                        val url = response.body()?.message
-                        Glide.with(itemView.context)
-                            .load(url)
-                            .placeholder(R.drawable.ico_dog)
-                            .error(R.drawable.ico_dog)
-                            .into(imgMascota)
-                    } else {
-                        Glide.with(itemView.context).load(R.drawable.ico_dog).into(imgMascota)
-                    }
+                    val url = response.body()?.message
+                    Glide.with(itemView.context)
+                        .load(url)
+                        .placeholder(R.drawable.ico_dog)
+                        .error(R.drawable.ico_dog)
+                        .into(imgMascota)
                 }
 
                 override fun onFailure(call: Call<ImagenRazaResponse>, t: Throwable) {
-                    Glide.with(itemView.context).load(R.drawable.ico_dog).into(imgMascota)
+                    Glide.with(itemView.context)
+                        .load(R.drawable.ico_dog)
+                        .into(imgMascota)
                 }
             })
 
             itemView.setOnClickListener {
-                onItemClick(citaResponse)
+                onItemClick(cita)
             }
         }
+
 
         private fun normalizarRazaParaApi(raza: String): String {
             return raza.lowercase()
@@ -85,10 +88,5 @@ class HomeAdapter(
                 .replace("[^a-z/]".toRegex(), "")
                 .replace(" ", "")
         }
-    }
-
-    fun updateList(newList: List<CitaResponse>) {
-        citaResponses = newList
-        notifyDataSetChanged()
     }
 }

@@ -4,42 +4,46 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicacioncitas.R
+import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.view.NuevaCita
 import com.example.aplicacioncitas.view.DetalleCitaActivity
+import com.example.aplicacioncitas.viewmodel.HomeViewModel
+import com.example.aplicacioncitas.viewmodel.HomeViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var recyclerViewCitas: RecyclerView
     private lateinit var fabAddCita: FloatingActionButton
-    private lateinit var citaRepository: CitaRepository
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        // ViewModel con Factory
+        val repository = CitaRepository()
+        val factory = HomeViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+
+        // UI Setup
         recyclerViewCitas = findViewById(R.id.recyclerViewCitas)
         fabAddCita = findViewById(R.id.fabAddCita)
 
-        //val database = AppDatabase.getDatabase(applicationContext)
-        //citaRepository = CitaRepository(database.citaDao())
-
         setupRecyclerView()
         setupFab()
-        cargarCitasDesdeBD()
+        observarViewModel()
     }
 
     override fun onResume() {
         super.onResume()
-        cargarCitasDesdeBD()
+        viewModel.cargarCitas()
     }
 
     private fun setupRecyclerView() {
@@ -50,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
                 putExtra("raza", cita.raza)
                 putExtra("telefono", cita.telefono)
                 putExtra("sintomas", cita.sintomas)
-                putExtra("id", cita.id.toString())
+                putExtra("id", cita.id)
             }
             startActivity(intent)
         }
@@ -65,10 +69,15 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun cargarCitasDesdeBD() {
-        lifecycleScope.launch {
-            //val citas = citaRepository.obtenerTodasLasCitas()
-            //homeAdapter.updateList(citas)
+    private fun observarViewModel() {
+        viewModel.citas.observe(this) { lista ->
+            homeAdapter.updateList(lista)
+        }
+
+        viewModel.error.observe(this) { mensaje ->
+            mensaje?.let {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
