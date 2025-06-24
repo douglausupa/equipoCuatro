@@ -4,21 +4,24 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aplicacioncitas.repository.RazasRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RazasViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = RazasRepository()
+@HiltViewModel
+class RazasViewModel @Inject constructor(
+    private val repository: RazasRepository
+) : ViewModel() {
 
     private val _breedList = MutableLiveData<List<String>>()
     val breedList: LiveData<List<String>> = _breedList
 
     private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> = _loading
 
     private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
 
     fun fetchBreeds() {
         viewModelScope.launch {

@@ -7,20 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.aplicacioncitas.R
 import com.example.aplicacioncitas.databinding.FragmentDetalleCitaBinding
-import com.example.aplicacioncitas.model.Cita
+import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.model.ImagenRazaResponse
-import com.example.aplicacioncitas.repository.CitaRepository
-import com.example.aplicacioncitas.view.DetalleCitaActivity
-import com.example.aplicacioncitas.view.EditarCita
+import com.example.aplicacioncitas.view.EditarCitaActivity
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
 import com.example.aplicacioncitas.viewmodel.DetalleCitaViewModel
-import com.example.aplicacioncitas.viewmodel.DetalleCitaViewModelFactory
 import com.example.aplicacioncitas.webservice.DogApiService
 import com.example.aplicacioncitas.webservice.RetrofitRazas
 import retrofit2.Call
@@ -125,17 +119,17 @@ class DetalleCitaFragment : Fragment() {
 
     private fun editarcita() {
         binding.btnEditar.setOnClickListener {
-            val cita = Cita(
+            val citaResponse = CitaResponse(
                 nombrePropietario = binding.etPropietario.text.toString(),
                 nombreMascota = binding.tituloNombreMascota.text.toString(),
                 raza = binding.etRaza.text.toString(),
                 telefono = binding.etTelefono.text.toString(),
                 sintomas = binding.etSintomas.text.toString(),
-                //id = binding.tvTurno.text.toString().toIntOrNull() ?: 0 // Asegúrate de que el ID es Int
+                /*id = binding.tvTurno.text.toString().toIntOrNull() ?: 0 // Asegúrate de que el ID es Int*/
             )
 
-            val intent = Intent(requireContext(), EditarCita::class.java).apply {
-                putExtra("cita", cita) // Envía el objeto completo
+            val intent = Intent(requireContext(), EditarCitaActivity::class.java).apply {
+                putExtra("cita", citaResponse) // Envía el objeto completo
             }
             startActivity(intent)
         }
