@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "citas")
 @Parcelize
 data class Cita(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: String = "",
     val nombrePropietario: String,
     val nombreMascota: String,
     val raza: String,

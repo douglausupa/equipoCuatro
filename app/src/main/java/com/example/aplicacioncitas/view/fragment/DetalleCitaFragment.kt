@@ -131,7 +131,7 @@ class DetalleCitaFragment : Fragment() {
                 raza = binding.etRaza.text.toString(),
                 telefono = binding.etTelefono.text.toString(),
                 sintomas = binding.etSintomas.text.toString(),
-                id = binding.tvTurno.text.toString().toIntOrNull() ?: 0 // Asegúrate de que el ID es Int
+                //id = binding.tvTurno.text.toString().toIntOrNull() ?: 0 // Asegúrate de que el ID es Int
             )
 
             val intent = Intent(requireContext(), EditarCita::class.java).apply {

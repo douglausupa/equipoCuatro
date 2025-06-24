@@ -32,6 +32,11 @@ class HomeAdapter(
 
     override fun getItemCount(): Int = citas.size
 
+    fun updateList(newList: List<Cita>) {
+        citas = newList
+        notifyDataSetChanged()
+    }
+
     inner class CitaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgMascota: CircleImageView = itemView.findViewById(R.id.imgMascota)
         private val tvNombreMascota: TextView = itemView.findViewById(R.id.tvNombreMascota)
@@ -40,33 +45,30 @@ class HomeAdapter(
 
         fun bind(cita: Cita) {
             tvNombreMascota.text = cita.nombreMascota
-            tvSintoma.text = cita.sintomas ?: "No especificado"
-            tvTurno.text = "#${cita.id}"
+            tvSintoma.text = (cita.sintomas ?: "").ifEmpty { "No especificado" }
+            //tvTurno.text = "Turno: #${bindingAdapterPosition + 1}" // opcional
 
+            // Siempre cargar la imagen desde la API de la raza
             val razaApi = normalizarRazaParaApi(cita.raza)
-
             val apiService = RetrofitRazas.instance.create(DogApiService::class.java)
-            val call = apiService.obtenerImagenPorRaza(razaApi)
 
-            call.enqueue(object : Callback<ImagenRazaResponse> {
+            apiService.obtenerImagenPorRaza(razaApi).enqueue(object : Callback<ImagenRazaResponse> {
                 override fun onResponse(
                     call: Call<ImagenRazaResponse>,
                     response: Response<ImagenRazaResponse>
                 ) {
-                    if (response.isSuccessful && response.body()?.status == "success") {
-                        val url = response.body()?.message
-                        Glide.with(itemView.context)
-                            .load(url)
-                            .placeholder(R.drawable.ico_dog)
-                            .error(R.drawable.ico_dog)
-                            .into(imgMascota)
-                    } else {
-                        Glide.with(itemView.context).load(R.drawable.ico_dog).into(imgMascota)
-                    }
+                    val url = response.body()?.message
+                    Glide.with(itemView.context)
+                        .load(url)
+                        .placeholder(R.drawable.ico_dog)
+                        .error(R.drawable.ico_dog)
+                        .into(imgMascota)
                 }
 
                 override fun onFailure(call: Call<ImagenRazaResponse>, t: Throwable) {
-                    Glide.with(itemView.context).load(R.drawable.ico_dog).into(imgMascota)
+                    Glide.with(itemView.context)
+                        .load(R.drawable.ico_dog)
+                        .into(imgMascota)
                 }
             })
 
@@ -85,10 +87,5 @@ class HomeAdapter(
                 .replace("[^a-z/]".toRegex(), "")
                 .replace(" ", "")
         }
-    }
-
-    fun updateList(newList: List<Cita>) {
-        citas = newList
-        notifyDataSetChanged()
     }
 }
