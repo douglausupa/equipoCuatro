@@ -131,6 +131,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     testImplementation ("org.mockito:mockito-inline:4.5.1") // Permite mockear clases final
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+
 
     // Hilt Core (versión principal)
     implementation("com.google.dagger:hilt-android:2.48")

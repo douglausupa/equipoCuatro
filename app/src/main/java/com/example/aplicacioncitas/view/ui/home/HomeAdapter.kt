@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.model.Cita
+import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.model.ImagenRazaResponse
 import com.example.aplicacioncitas.webservice.DogApiService
 import com.example.aplicacioncitas.webservice.RetrofitRazas
@@ -17,8 +17,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeAdapter(
-    private var citas: List<Cita>,
-    private val onItemClick: (Cita) -> Unit
+    private var citas: List<CitaResponse>,
+    private val onItemClick: (CitaResponse) -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.CitaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitaViewHolder {
@@ -32,7 +32,7 @@ class HomeAdapter(
 
     override fun getItemCount(): Int = citas.size
 
-    fun updateList(newList: List<Cita>) {
+    fun updateList(newList: List<CitaResponse>) {
         citas = newList
         notifyDataSetChanged()
     }
@@ -43,7 +43,7 @@ class HomeAdapter(
         private val tvSintoma: TextView = itemView.findViewById(R.id.tvSintoma)
         private val tvTurno: TextView = itemView.findViewById(R.id.tvTurno)
 
-        fun bind(cita: Cita) {
+        fun bind(cita: CitaResponse) {
             tvNombreMascota.text = cita.nombreMascota
             tvSintoma.text = (cita.sintomas ?: "").ifEmpty { "No especificado" }
             //tvTurno.text = "Turno: #${bindingAdapterPosition + 1}" // opcional
@@ -76,6 +76,7 @@ class HomeAdapter(
                 onItemClick(cita)
             }
         }
+
 
         private fun normalizarRazaParaApi(raza: String): String {
             return raza.lowercase()
