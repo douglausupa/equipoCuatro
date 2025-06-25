@@ -46,9 +46,11 @@ class HomeAdapter(
         fun bind(cita: CitaResponse) {
             tvNombreMascota.text = cita.nombreMascota
             tvSintoma.text = (cita.sintomas ?: "").ifEmpty { "No especificado" }
-            //tvTurno.text = "Turno: #${bindingAdapterPosition + 1}" // opcional
 
-            // Siempre cargar la imagen desde la API de la raza
+            // Turno secuencial basado en la posición del adaptador
+            tvTurno.text = "#${absoluteAdapterPosition + 1}"
+
+            // Cargar imagen desde API de raza
             val razaApi = normalizarRazaParaApi(cita.raza)
             val apiService = RetrofitRazas.instance.create(DogApiService::class.java)
 
@@ -76,7 +78,6 @@ class HomeAdapter(
                 onItemClick(cita)
             }
         }
-
 
         private fun normalizarRazaParaApi(raza: String): String {
             return raza.lowercase()
