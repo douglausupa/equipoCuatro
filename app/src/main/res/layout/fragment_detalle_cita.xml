@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.DetalleCitaFragmetent">
+    tools:context=".view.fragments.DetalleCitaFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -151,6 +151,7 @@
                     android:inputType="text"
                     android:background="@android:color/transparent"
                     android:paddingLeft="8dp"
+                    android:textColor="@android:color/black"
                     android:hint="@string/nombrePropietario"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -182,6 +183,7 @@
                     android:inputType="text"
                     android:paddingLeft="8dp"
                     android:hint="@string/telefono"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"/>
 
             </LinearLayout>
