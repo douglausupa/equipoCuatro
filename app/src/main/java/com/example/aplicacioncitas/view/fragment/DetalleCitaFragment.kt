@@ -7,27 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.databinding.FragmentDetalleCitaBinding
 import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.model.ImagenRazaResponse
-import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.view.EditarCitaActivity
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
 import com.example.aplicacioncitas.viewmodel.DetalleCitaViewModel
-import com.example.aplicacioncitas.viewmodel.DetalleCitaViewModelFactory
 import com.example.aplicacioncitas.webservice.DogApiService
 import com.example.aplicacioncitas.webservice.RetrofitRazas
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@AndroidEntryPoint
 class DetalleCitaFragment : Fragment() {
 
     private var _binding: FragmentDetalleCitaBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: DetalleCitaViewModel
+    private val viewModel: DetalleCitaViewModel by viewModels()
     private lateinit var dogApiService: DogApiService
     private var idCita: Int? = null
     private var cita: CitaResponse? = null
@@ -42,11 +42,6 @@ class DetalleCitaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetalleCitaBinding.inflate(inflater, container, false)
-
-        val repository = CitaRepository()
-        val factory = DetalleCitaViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, factory)[DetalleCitaViewModel::class.java]
-
         dogApiService = RetrofitRazas.instance.create(DogApiService::class.java)
         return binding.root
     }
@@ -145,3 +140,5 @@ class DetalleCitaFragment : Fragment() {
         }
     }
 }
+
+

@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aplicacioncitas.R
 import com.example.aplicacioncitas.view.fragments.DetalleCitaFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetalleCitaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

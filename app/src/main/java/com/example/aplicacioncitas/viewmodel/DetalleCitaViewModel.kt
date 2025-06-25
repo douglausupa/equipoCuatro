@@ -6,9 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.repository.CitaRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetalleCitaViewModel(private val citaRepository: CitaRepository) : ViewModel() {
+@HiltViewModel
+class DetalleCitaViewModel @Inject constructor(
+    private val citaRepository: CitaRepository
+) : ViewModel() {
 
     private val _citaEliminada = MutableLiveData<Boolean>()
     val citaEliminada: LiveData<Boolean> get() = _citaEliminada
@@ -38,3 +43,5 @@ class DetalleCitaViewModel(private val citaRepository: CitaRepository) : ViewMod
         }
     }
 }
+
+
