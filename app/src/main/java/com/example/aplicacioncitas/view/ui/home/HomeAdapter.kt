@@ -77,7 +77,6 @@ class HomeAdapter(
             }
         }
 
-
         private fun normalizarRazaParaApi(raza: String): String {
             return raza.lowercase()
                 .replace("[áàäâ]".toRegex(), "a")
