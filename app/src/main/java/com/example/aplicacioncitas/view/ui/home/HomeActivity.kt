@@ -48,18 +48,14 @@ class HomeActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         homeAdapter = HomeAdapter(emptyList()) { cita ->
             val intent = Intent(this, DetalleCitaActivity::class.java).apply {
-                putExtra("nombrePropietario", cita.nombrePropietario)
-                putExtra("nombreMascota", cita.nombreMascota)
-                putExtra("raza", cita.raza)
-                putExtra("telefono", cita.telefono)
-                putExtra("sintomas", cita.sintomas)
-                putExtra("id", cita.id)
+                putExtra("id", cita.id.toInt())  // <- asegúrese que 'cita.id' no es null
             }
             startActivity(intent)
         }
         recyclerViewCitas.layoutManager = LinearLayoutManager(this)
         recyclerViewCitas.adapter = homeAdapter
     }
+
 
     private fun setupFab() {
         fabAddCita.setOnClickListener {
@@ -80,3 +76,4 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 }
+
