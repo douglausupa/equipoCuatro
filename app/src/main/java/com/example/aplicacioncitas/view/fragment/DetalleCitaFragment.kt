@@ -7,52 +7,35 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.databinding.FragmentDetalleCitaBinding
 import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.model.ImagenRazaResponse
+import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.view.EditarCitaActivity
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
 import com.example.aplicacioncitas.viewmodel.DetalleCitaViewModel
+import com.example.aplicacioncitas.viewmodel.DetalleCitaViewModelFactory
 import com.example.aplicacioncitas.webservice.DogApiService
 import com.example.aplicacioncitas.webservice.RetrofitRazas
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class DetalleCitaFragment : Fragment() {
 
     private var _binding: FragmentDetalleCitaBinding? = null
     private val binding get() = _binding!!
-
-
     private lateinit var viewModel: DetalleCitaViewModel
-
-    private var nombrePropietario: String? = null
-    private var nombreMascota: String? = null
-    private var raza: String? = null
-    private var telefono: String? = null
-    private var sintomas: String? = null
-    private var id: String? = null
-
     private lateinit var dogApiService: DogApiService
+    private var idCita: Int? = null
+    private var cita: CitaResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            nombrePropietario = it.getString("nombrePropietario")
-            nombreMascota = it.getString("nombreMascota")
-            raza = it.getString("raza")
-            telefono = it.getString("telefono")
-            sintomas = it.getString("sintomas")
-            id = it.getString("id")
-        }
-
+        idCita = arguments?.getInt("id")
     }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,11 +43,9 @@ class DetalleCitaFragment : Fragment() {
     ): View {
         _binding = FragmentDetalleCitaBinding.inflate(inflater, container, false)
 
-        //val citaDao = AppDatabase.getDatabase(requireContext()).citaDao()
-        //val repository = CitaRepository(citaDao)
-
-        //val factory = DetalleCitaViewModelFactory(repository)
-        //viewModel = ViewModelProvider(this, factory).get(DetalleCitaViewModel::class.java)
+        val repository = CitaRepository()
+        val factory = DetalleCitaViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory)[DetalleCitaViewModel::class.java]
 
         dogApiService = RetrofitRazas.instance.create(DogApiService::class.java)
         return binding.root
@@ -73,82 +54,75 @@ class DetalleCitaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Establecer los valores de los campos de texto
-        binding.etPropietario.setText(nombrePropietario)
-        binding.tituloNombreMascota.setText(nombreMascota)
-        binding.etRaza.setText(raza)
-        binding.etTelefono.setText(telefono)
-        binding.etSintomas.setText(sintomas)
-        id?.let {
-            binding.tvTurno.text = it // Mostrar el ID en el TextView
+        idCita?.let { viewModel.cargarCitaPorId(it) }
 
+        viewModel.cita.observe(viewLifecycleOwner) { citaResponse ->
+            if (citaResponse != null) {
+                cita = citaResponse
+                mostrarDatos(citaResponse)
+            } else {
+                Toast.makeText(context, "Cita no encontrada", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        eliminar()
-        editarcita()
-        debolver()
-        cargarImagenRaza()
+        binding.backButton.setOnClickListener { volver() }
+        binding.btnEditar.setOnClickListener { irAEditar() }
+        binding.fabEliminar.setOnClickListener { eliminarCita() }
 
-        // Observa si la cita fue eliminada
-        viewModel.citaEliminada.observe(viewLifecycleOwner, Observer { eliminado ->
+        viewModel.citaEliminada.observe(viewLifecycleOwner) { eliminado ->
             if (eliminado) {
-                Toast.makeText(requireContext(), "Cita eliminada con éxito", Toast.LENGTH_SHORT).show()
-                // Ir a HomeActivity
+                Toast.makeText(context, "Cita eliminada", Toast.LENGTH_SHORT).show()
                 val intent = Intent(requireContext(), HomeActivity::class.java)
                 startActivity(intent)
-                requireActivity().finish() // Cierra la actividad actual
+                requireActivity().finish()
             } else {
-                Toast.makeText(requireContext(), "Hubo un error al eliminar la cita", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun eliminar() {
-        binding.fabEliminar.setOnClickListener {
-            val idText = binding.tvTurno.text.toString()
-            val idInt = idText.toIntOrNull()
-
-            if (idInt != null) {
-                // Llama al método del ViewModel para eliminar la cita por ID
-                viewModel.eliminarCitaPorId(idInt)
-            } else {
-                Toast.makeText(requireContext(), "ID inválido", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Error al eliminar", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun editarcita() {
-        binding.btnEditar.setOnClickListener {
-            val citaResponse = CitaResponse(
-                nombrePropietario = binding.etPropietario.text.toString(),
-                nombreMascota = binding.tituloNombreMascota.text.toString(),
-                raza = binding.etRaza.text.toString(),
-                telefono = binding.etTelefono.text.toString(),
-                sintomas = binding.etSintomas.text.toString(),
-                /*id = binding.tvTurno.text.toString().toIntOrNull() ?: 0 // Asegúrate de que el ID es Int*/
-            )
+    private fun mostrarDatos(c: CitaResponse) {
+        binding.tituloNombreMascota.text = c.nombreMascota
+        binding.etRaza.setText(c.raza)
+        binding.etSintomas.setText(c.sintomas)
+        binding.etPropietario.setText(c.nombrePropietario)
+        binding.etTelefono.setText(c.telefono)
+        binding.tvTurno.text = c.id.toString()
+        cargarImagenRaza(c.raza)
+    }
 
-            val intent = Intent(requireContext(), EditarCitaActivity::class.java).apply {
-                putExtra("cita", citaResponse) // Envía el objeto completo
-            }
+    private fun eliminarCita() {
+        val idLong = cita?.id
+        if (idLong != null) {
+            viewModel.eliminarCitaPorId(idLong.toInt())
+        } else {
+            Toast.makeText(requireContext(), "ID inválido", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun irAEditar() {
+        cita?.let {
+            val intent = Intent(requireContext(), EditarCitaActivity::class.java)
+            intent.putExtra("cita", it)
             startActivity(intent)
         }
     }
 
-    private fun cargarImagenRaza() {
-        val razaFormateada = raza?.replace(" ", "-")?.lowercase() ?: return
+    private fun volver() {
+        val intent = Intent(requireContext(), HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        requireActivity().finish()
+    }
 
+    private fun cargarImagenRaza(nombreRaza: String) {
+        val razaFormateada = nombreRaza.replace(" ", "-").lowercase()
         dogApiService.obtenerImagenPorRaza(razaFormateada).enqueue(object : Callback<ImagenRazaResponse> {
-            override fun onResponse(
-                call: Call<ImagenRazaResponse>,
-                response: Response<ImagenRazaResponse> // <- Response de Retrofit
-            ) {
+            override fun onResponse(call: Call<ImagenRazaResponse>, response: Response<ImagenRazaResponse>) {
                 if (response.isSuccessful) {
-                    response.body()?.let { cuerpoRespuesta ->
-                        Glide.with(requireContext())
-                            .load(cuerpoRespuesta.message) // Usamos el campo del objeto
-                            .into(binding.ivMascota)
-                    }
+                    Glide.with(requireContext())
+                        .load(response.body()?.message)
+                        .into(binding.ivMascota)
                 }
             }
 
@@ -158,41 +132,16 @@ class DetalleCitaFragment : Fragment() {
         })
     }
 
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     companion object {
-        fun newInstance(
-            nombrePropietario: String,
-            nombreMascota: String,
-            raza: String,
-            id: String,
-            telefono: String,
-            sintomas: String
-        ) = DetalleCitaFragment().apply {
+        fun newInstance(id: Int) = DetalleCitaFragment().apply {
             arguments = Bundle().apply {
-                putString("nombrePropietario", nombrePropietario)
-                putString("nombreMascota", nombreMascota)
-                putString("raza", raza)
-                putString("telefono", telefono)
-                putString("sintomas", sintomas)
-                putString("id", id)
+                putInt("id", id)
             }
         }
-    }
-
-    private fun debolver(){
-
-        binding.backButton.setOnClickListener {
-            val intent = Intent(requireContext(), HomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            requireActivity().finish()
-        }
-
     }
 }

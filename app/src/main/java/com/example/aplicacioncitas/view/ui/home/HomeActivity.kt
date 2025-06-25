@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.view.NuevaCita
 import com.example.aplicacioncitas.view.DetalleCitaActivity
@@ -49,18 +48,14 @@ class HomeActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         homeAdapter = HomeAdapter(emptyList()) { cita ->
             val intent = Intent(this, DetalleCitaActivity::class.java).apply {
-                putExtra("nombrePropietario", cita.nombrePropietario)
-                putExtra("nombreMascota", cita.nombreMascota)
-                putExtra("raza", cita.raza)
-                putExtra("telefono", cita.telefono)
-                putExtra("sintomas", cita.sintomas)
-                putExtra("id", cita.id)
+                putExtra("id", cita.id.toInt())  // <- asegúrese que 'cita.id' no es null
             }
             startActivity(intent)
         }
         recyclerViewCitas.layoutManager = LinearLayoutManager(this)
         recyclerViewCitas.adapter = homeAdapter
     }
+
 
     private fun setupFab() {
         fabAddCita.setOnClickListener {

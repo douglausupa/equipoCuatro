@@ -3,7 +3,6 @@ package com.example.aplicacioncitas.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aplicacioncitas.model.CitaResponse
-import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.repository.ICitaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
