@@ -19,6 +19,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         // Espera 5 segundos, luego inicia LoginActivity
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, LoginActivity::class.java)
@@ -29,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        // Evita retroceder desde el splash
+        super.onBackPressed()
         finishAffinity()
     }
 }

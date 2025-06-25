@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val emailFilled = etEmail.text.toString().isNotEmpty()
-                val passwordFilled = etPassword.text.toString().isNotEmpty()
+                val passwordFilled = etPassword.text.toString().length <= 6
                 val enable = emailFilled && passwordFilled
                 tvRegister.isEnabled = enable
                 tvRegister.alpha = if (enable) 1f else 0.5f

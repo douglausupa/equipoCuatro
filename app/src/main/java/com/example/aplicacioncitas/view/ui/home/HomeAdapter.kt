@@ -48,7 +48,7 @@ class HomeAdapter(
             tvSintoma.text = (cita.sintomas ?: "").ifEmpty { "No especificado" }
 
             // Turno secuencial basado en la posición del adaptador
-            tvTurno.text = "#${absoluteAdapterPosition + 1}"
+            tvTurno.text = "#" + cita.id.toString()
 
             // Cargar imagen desde API de raza
             val razaApi = normalizarRazaParaApi(cita.raza)
