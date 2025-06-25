@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.databinding.FragmentDetalleCitaBinding
-import com.example.aplicacioncitas.model.CitaResponse
+import com.example.aplicacioncitas.model.Cita
 import com.example.aplicacioncitas.model.ImagenRazaResponse
 import com.example.aplicacioncitas.view.EditarCitaActivity
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
@@ -76,6 +76,7 @@ class DetalleCitaFragment : Fragment() {
         }
     }
 
+<<<<<<< HEAD
     private fun mostrarDatos(c: CitaResponse) {
         binding.tituloNombreMascota.text = c.nombreMascota
         binding.etRaza.setText(c.raza)
@@ -99,6 +100,22 @@ class DetalleCitaFragment : Fragment() {
         cita?.let {
             val intent = Intent(requireContext(), EditarCitaActivity::class.java)
             intent.putExtra("cita", it)
+=======
+    private fun editarcita() {
+        binding.btnEditar.setOnClickListener {
+            val cita = Cita(
+                nombrePropietario = binding.etPropietario.text.toString(),
+                nombreMascota = binding.tituloNombreMascota.text.toString(),
+                raza = binding.etRaza.text.toString(),
+                telefono = binding.etTelefono.text.toString(),
+                sintomas = binding.etSintomas.text.toString(),
+                /*id = binding.tvTurno.text.toString().toIntOrNull() ?: 0 // Asegúrate de que el ID es Int*/
+            )
+
+            val intent = Intent(requireContext(), EditarCita::class.java).apply {
+                putExtra("cita", cita) // Envía el objeto completo
+            }
+>>>>>>> 5772a7fc6b55230dd262119c5b38a21dfba32d8d
             startActivity(intent)
         }
     }
