@@ -1,7 +1,6 @@
 package com.example.aplicacioncitas
 
 import com.example.aplicacioncitas.model.CitaResponse
-import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.repository.ICitaRepository
 import com.example.aplicacioncitas.viewmodel.EditarCitaViewModel
 import kotlinx.coroutines.Dispatchers
