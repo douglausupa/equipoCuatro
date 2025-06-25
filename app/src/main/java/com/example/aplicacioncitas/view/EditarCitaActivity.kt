@@ -35,12 +35,6 @@ class EditarCitaActivity : AppCompatActivity() {
 
         enableEdgeToEdge()
 
-
-        //val dao = AppDatabase.getDatabase(this).citaDao()
-        //val repository = CitaRepository(dao)
-        //val viewModelFactory = CitaViewModelFactory(repository)
-        //citaViewModel = ViewModelProvider(this, viewModelFactory)[EditarCitaViewModel::class.java]
-
         val citaResponse = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("cita", CitaResponse::class.java)
         } else {

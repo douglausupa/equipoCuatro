@@ -16,7 +16,7 @@ import org.mockito.MockitoAnnotations
 @OptIn(ExperimentalCoroutinesApi::class)
 class DetalleCitaViewModelTest {
 
-    // ✅ Regla para ejecutar LiveData de forma síncrona durante las pruebas
+
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 

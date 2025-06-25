@@ -22,7 +22,7 @@ class DetalleCitaActivity : AppCompatActivity() {
                     .replace(R.id.fragment_container, fragment)
                     .commit()
             } else {
-                // Si no se pasa el ID correctamente, cierra la actividad
+
                 finish()
             }
         }

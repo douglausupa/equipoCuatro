@@ -81,7 +81,7 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="8"
+            android:maxLength="6"
             android:inputType="numberPassword"
             android:textColor="@color/blanco"/>
     </com.google.android.material.textfield.TextInputLayout>
