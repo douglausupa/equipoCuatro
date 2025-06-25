@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.model.CitaResponse
+import com.example.aplicacioncitas.model.Cita
 import com.example.aplicacioncitas.model.ImagenRazaResponse
 import com.example.aplicacioncitas.webservice.DogApiService
 import com.example.aplicacioncitas.webservice.RetrofitRazas
@@ -17,8 +17,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeAdapter(
+<<<<<<< HEAD
     private var citas: List<CitaResponse>,
     private val onItemClick: (CitaResponse) -> Unit
+=======
+    private var citaRespons: List<Cita>,
+    private val onItemClick: (Cita) -> Unit
+>>>>>>> 5772a7fc6b55230dd262119c5b38a21dfba32d8d
 ) : RecyclerView.Adapter<HomeAdapter.CitaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitaViewHolder {
@@ -27,6 +32,7 @@ class HomeAdapter(
     }
 
     override fun onBindViewHolder(holder: CitaViewHolder, position: Int) {
+<<<<<<< HEAD
         holder.bind(citas[position])
     }
 
@@ -36,6 +42,12 @@ class HomeAdapter(
         citas = newList
         notifyDataSetChanged()
     }
+=======
+        holder.bind(citaRespons[position])
+    }
+
+    override fun getItemCount(): Int = citaRespons.size
+>>>>>>> 5772a7fc6b55230dd262119c5b38a21dfba32d8d
 
     inner class CitaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgMascota: CircleImageView = itemView.findViewById(R.id.imgMascota)
@@ -43,12 +55,21 @@ class HomeAdapter(
         private val tvSintoma: TextView = itemView.findViewById(R.id.tvSintoma)
         private val tvTurno: TextView = itemView.findViewById(R.id.tvTurno)
 
+<<<<<<< HEAD
         fun bind(cita: CitaResponse) {
             tvNombreMascota.text = cita.nombreMascota
             tvSintoma.text = (cita.sintomas ?: "").ifEmpty { "No especificado" }
 
             // Turno secuencial basado en la posición del adaptador
             tvTurno.text = "#${absoluteAdapterPosition + 1}"
+=======
+        fun bind(cita: Cita) {
+            tvNombreMascota.text = cita.nombreMascota
+            tvSintoma.text = cita.sintomas ?: "No especificado"
+            tvTurno.text = "#${cita.id}"
+
+            val razaApi = normalizarRazaParaApi(cita.raza)
+>>>>>>> 5772a7fc6b55230dd262119c5b38a21dfba32d8d
 
             // Cargar imagen desde API de raza
             val razaApi = normalizarRazaParaApi(cita.raza)
@@ -90,4 +111,12 @@ class HomeAdapter(
                 .replace(" ", "")
         }
     }
+<<<<<<< HEAD
+=======
+
+    fun updateList(newList: List<Cita>) {
+        citaRespons = newList
+        notifyDataSetChanged()
+    }
+>>>>>>> 5772a7fc6b55230dd262119c5b38a21dfba32d8d
 }
