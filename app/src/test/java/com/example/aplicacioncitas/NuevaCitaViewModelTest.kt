@@ -70,3 +70,5 @@ class NuevaCitaViewModelTest {
         verify(mockRepository).insertarCita(any())
     }
 }
+
+//Test!!
