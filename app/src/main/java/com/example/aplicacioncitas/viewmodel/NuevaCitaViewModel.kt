@@ -2,12 +2,8 @@ package com.example.aplicacioncitas.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-<<<<<<< HEAD
 import com.example.aplicacioncitas.auth.IAuthProvider
 import com.example.aplicacioncitas.model.CitaResponse
-=======
-import com.example.aplicacioncitas.model.Cita
->>>>>>> 5772a7fc6b55230dd262119c5b38a21dfba32d8d
 import com.example.aplicacioncitas.repository.CitaRepository
 import com.example.aplicacioncitas.repository.ICitaRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -35,7 +31,7 @@ class NuevaCitaViewModel @Inject constructor(
             return
         }
 
-        val cita = Cita(
+        val citaResponse = CitaResponse(
             userId = userId,
             nombrePropietario = nombrePropietario,
             nombreMascota = nombreMascota,
@@ -46,7 +42,7 @@ class NuevaCitaViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                citarepository.insertarCita(cita)
+                citarepository.insertarCita(citaResponse)
                 onSuccess()
             } catch (e: Exception) {
                 onError("Error al guardar: ${e.message}")
