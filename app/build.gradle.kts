@@ -134,6 +134,7 @@ dependencies {
     testImplementation("androidx.arch.core:core-testing:2.2.0")
 
 
+
     // Hilt Core (versión principal)
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48") // ¡OJO! Cambiado de hilt-compiler

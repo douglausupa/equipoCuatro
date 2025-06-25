@@ -1,9 +1,9 @@
 package com.example.aplicacioncitas.view
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -16,8 +16,6 @@ import com.example.aplicacioncitas.databinding.NuevaCitaBinding
 import com.example.aplicacioncitas.viewmodel.NuevaCitaViewModel
 import com.example.aplicacioncitas.viewmodel.RazasViewModel
 import com.example.aplicacioncitas.view.ui.home.HomeActivity
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,20 +25,6 @@ class NuevaCita : AppCompatActivity() {
     private val nuevaCitaViewModel: NuevaCitaViewModel by viewModels()
     private val razasViewModel: RazasViewModel by viewModels()
 
-
-    private fun imprimirTodasLasCitas() {
-        Firebase.firestore.collection("citas")
-            .get()
-            .addOnSuccessListener { snapshot ->
-                snapshot.documents.forEach { doc ->
-                    Log.d("PRUEBAS", "CITA: ${doc.id} - ${doc.data}")
-                }
-                Log.d("PRUEBAS", "Total citas: ${snapshot.size()}")
-            }
-            .addOnFailureListener { e ->
-                Log.e("PRUEBAS", "Error: ${e.message}")
-            }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,9 +121,6 @@ class NuevaCita : AppCompatActivity() {
             onSuccess = {
                 Toast.makeText(this, "Cita guardada!", Toast.LENGTH_SHORT).show()
                 limpiarCampos()
-
-                // Imprimir todas las citas después de guardar
-                imprimirTodasLasCitas()
 
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
