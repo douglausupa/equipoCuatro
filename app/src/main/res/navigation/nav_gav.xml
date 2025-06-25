@@ -23,14 +23,15 @@
         android:name="com.example.aplicacioncitas.view.EditarCitaActivity"
         android:label="activity_edit_date"
         tools:layout="@layout/activity_edit_date" />
-    <navigation android:id="@+id/navigation"
-        app:startDestination="@id/nuevaCita">
-        <activity
-            android:id="@+id/nuevaCita"
-            android:name="com.example.aplicacioncitas.view.NuevaCita"
-            android:label="nueva_cita"
-            tools:layout="@layout/nueva_cita" />
-    </navigation>
+    <activity
+        android:id="@+id/nuevaCita"
+        android:name="com.example.aplicacioncitas.view.NuevaCita"
+        android:label="nueva_cita"
+        tools:layout="@layout/nueva_cita" />
+    <activity
+        android:id="@+id/splashActivity"
+        android:name="com.example.aplicacioncitas.view.SplashActivity"
+        android:label="SplashActivity" />
     <activity
         android:id="@+id/homeActivity"
         android:name="com.example.aplicacioncitas.view.ui.home.HomeActivity"
