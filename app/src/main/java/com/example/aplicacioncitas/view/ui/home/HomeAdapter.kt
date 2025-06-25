@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplicacioncitas.R
-import com.example.aplicacioncitas.model.Cita
+import com.example.aplicacioncitas.model.CitaResponse
 import com.example.aplicacioncitas.model.ImagenRazaResponse
 import com.example.aplicacioncitas.webservice.DogApiService
 import com.example.aplicacioncitas.webservice.RetrofitRazas
@@ -17,8 +17,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeAdapter(
-    private var citas: List<Cita>,
-    private val onItemClick: (Cita) -> Unit
+    private var citas: List<CitaResponse>,
+    private val onItemClick: (CitaResponse) -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.CitaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitaViewHolder {
@@ -32,41 +32,43 @@ class HomeAdapter(
 
     override fun getItemCount(): Int = citas.size
 
+    fun updateList(newList: List<CitaResponse>) {
+        citas = newList
+        notifyDataSetChanged()
+    }
+
     inner class CitaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgMascota: CircleImageView = itemView.findViewById(R.id.imgMascota)
         private val tvNombreMascota: TextView = itemView.findViewById(R.id.tvNombreMascota)
         private val tvSintoma: TextView = itemView.findViewById(R.id.tvSintoma)
         private val tvTurno: TextView = itemView.findViewById(R.id.tvTurno)
 
-        fun bind(cita: Cita) {
+        fun bind(cita: CitaResponse) {
             tvNombreMascota.text = cita.nombreMascota
-            tvSintoma.text = cita.sintomas ?: "No especificado"
-            tvTurno.text = "#${cita.id}"
+            tvSintoma.text = (cita.sintomas ?: "").ifEmpty { "No especificado" }
+            //tvTurno.text = "Turno: #${bindingAdapterPosition + 1}" // opcional
 
+            // Siempre cargar la imagen desde la API de la raza
             val razaApi = normalizarRazaParaApi(cita.raza)
-
             val apiService = RetrofitRazas.instance.create(DogApiService::class.java)
-            val call = apiService.obtenerImagenPorRaza(razaApi)
 
-            call.enqueue(object : Callback<ImagenRazaResponse> {
+            apiService.obtenerImagenPorRaza(razaApi).enqueue(object : Callback<ImagenRazaResponse> {
                 override fun onResponse(
                     call: Call<ImagenRazaResponse>,
                     response: Response<ImagenRazaResponse>
                 ) {
-                    if (response.isSuccessful && response.body()?.status == "success") {
-                        val url = response.body()?.message
-                        Glide.with(itemView.context)
-                            .load(url)
-                            .placeholder(R.drawable.ico_dog)
-                            .error(R.drawable.ico_dog)
-                            .into(imgMascota)
-                    } else {
-                        Glide.with(itemView.context).load(R.drawable.ico_dog).into(imgMascota)
-                    }
+                    val url = response.body()?.message
+                    Glide.with(itemView.context)
+                        .load(url)
+                        .placeholder(R.drawable.ico_dog)
+                        .error(R.drawable.ico_dog)
+                        .into(imgMascota)
                 }
 
                 override fun onFailure(call: Call<ImagenRazaResponse>, t: Throwable) {
-                    Glide.with(itemView.context).load(R.drawable.ico_dog).into(imgMascota)
+                    Glide.with(itemView.context)
+                        .load(R.drawable.ico_dog)
+                        .into(imgMascota)
                 }
             })
 
@@ -74,6 +76,7 @@ class HomeAdapter(
                 onItemClick(cita)
             }
         }
+
 
         private fun normalizarRazaParaApi(raza: String): String {
             return raza.lowercase()
@@ -85,10 +88,5 @@ class HomeAdapter(
                 .replace("[^a-z/]".toRegex(), "")
                 .replace(" ", "")
         }
-    }
-
-    fun updateList(newList: List<Cita>) {
-        citas = newList
-        notifyDataSetChanged()
     }
 }
